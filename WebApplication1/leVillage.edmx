@@ -1,0 +1,1571 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="leVillageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="idAddress" />
+          </Key>
+          <Property Name="idAddress" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="street" Type="nvarchar" MaxLength="45" />
+          <Property Name="city" Type="nvarchar" MaxLength="45" />
+          <Property Name="state" Type="nvarchar" MaxLength="45" />
+          <Property Name="postalCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="idCountry" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BloodType">
+          <Key>
+            <PropertyRef Name="idbloodType" />
+          </Key>
+          <Property Name="idbloodType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bloodTypeName" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Campus">
+          <Key>
+            <PropertyRef Name="idCampus" />
+          </Key>
+          <Property Name="idCampus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="campusName" Type="nvarchar" MaxLength="255" />
+          <Property Name="campusStreet" Type="nvarchar" MaxLength="45" />
+          <Property Name="campusCity" Type="nvarchar" MaxLength="45" />
+          <Property Name="campusPostalCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="idCountry" Type="int" Nullable="false" />
+          <Property Name="parentCampus" Type="int" />
+        </EntityType>
+        <EntityType Name="CheckListCategory">
+          <Key>
+            <PropertyRef Name="idcheckListCategory" />
+          </Key>
+          <Property Name="idcheckListCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="namecheckListCategory" Type="nvarchar" MaxLength="45" />
+          <Property Name="isMemberStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="ChurchHistory">
+          <Key>
+            <PropertyRef Name="idChurchHistory" />
+          </Key>
+          <Property Name="idChurchHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="churchName" Type="nvarchar" MaxLength="255" />
+          <Property Name="pastorName" Type="nvarchar" MaxLength="255" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+          <Property Name="roleInChurch" Type="int" Nullable="false" />
+          <Property Name="comments" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="idCountry" />
+          </Key>
+          <Property Name="idCountry" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iso_alpha2" Type="nchar" MaxLength="2" />
+          <Property Name="iso_alpha3" Type="nchar" MaxLength="3" />
+          <Property Name="iso_numeric" Type="int" />
+          <Property Name="fips_code" Type="nvarchar" MaxLength="3" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="capital" Type="nvarchar" MaxLength="200" />
+          <Property Name="areainsqkm" Type="float" />
+          <Property Name="population" Type="int" />
+          <Property Name="continent" Type="nchar" MaxLength="2" />
+          <Property Name="tld" Type="nchar" MaxLength="3" />
+          <Property Name="currency" Type="nchar" MaxLength="3" />
+          <Property Name="currencyName" Type="nchar" MaxLength="20" />
+          <Property Name="Phone" Type="nchar" MaxLength="10" />
+          <Property Name="postalCodeFormat" Type="nvarchar" MaxLength="100" />
+          <Property Name="postalCodeRegex" Type="nvarchar" MaxLength="255" />
+          <Property Name="geonameId" Type="int" />
+          <Property Name="languages" Type="nvarchar" MaxLength="200" />
+          <Property Name="neighbours" Type="nchar" MaxLength="100" />
+          <Property Name="equivalentFipsCode" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="EmploymentHistory">
+          <Key>
+            <PropertyRef Name="idEmploymentHistory" />
+          </Key>
+          <Property Name="idEmploymentHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployerName" Type="nvarchar" MaxLength="45" />
+          <Property Name="fromDate" Type="date" />
+          <Property Name="toDate" Type="date" />
+          <Property Name="position" Type="nvarchar" MaxLength="45" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntryPoint">
+          <Key>
+            <PropertyRef Name="idEntryPoint" />
+          </Key>
+          <Property Name="idEntryPoint" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="entryPointName" Type="nvarchar" MaxLength="255" />
+          <Property Name="locationEntryPoint" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Families">
+          <Key>
+            <PropertyRef Name="idFamilies" />
+          </Key>
+          <Property Name="idFamilies" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FamilyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="idAddress" Type="int" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="45" />
+          <Property Name="picture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="FamilyRole">
+          <Key>
+            <PropertyRef Name="idFamilyRole" />
+          </Key>
+          <Property Name="idFamilyRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="familyRoleName" Type="nvarchar" MaxLength="255" />
+          <Property Name="familyRoleCode" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Industry">
+          <Key>
+            <PropertyRef Name="idIndustry" />
+          </Key>
+          <Property Name="idIndustry" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="industryName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MaritalStatus">
+          <Key>
+            <PropertyRef Name="idMaritalStatus" />
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idMaritalStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMaritalStatusType" Type="int" Nullable="false" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaritalStatusType">
+          <Key>
+            <PropertyRef Name="idMaritalStatusType" />
+          </Key>
+          <Property Name="idMaritalStatusType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameMaritalStatusType" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="MedicalInfo">
+          <Key>
+            <PropertyRef Name="idMedicalInfo" />
+          </Key>
+          <Property Name="idMedicalInfo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorName" Type="nvarchar" MaxLength="255" />
+          <Property Name="DoctorPhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="DoctorEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="idbloodType" Type="int" Nullable="false" />
+          <Property Name="height" Type="nvarchar" MaxLength="45" />
+          <Property Name="allergies" Type="nvarchar" MaxLength="1000" />
+          <Property Name="pathologies" Type="nvarchar" MaxLength="1000" />
+          <Property Name="medicines" Type="nvarchar" MaxLength="1000" />
+          <Property Name="vaccines" Type="nvarchar" MaxLength="1000" />
+          <Property Name="comments" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="memberIdentificationNumber" Type="nvarchar" MaxLength="45" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="dateOfBirth" Type="date" />
+          <Property Name="sex" Type="nvarchar" MaxLength="6" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="255" />
+          <Property Name="isConverted" Type="smallint" />
+          <Property Name="dateConversion" Type="date" />
+          <Property Name="isBaptized" Type="smallint" />
+          <Property Name="dateBaptism" Type="date" />
+          <Property Name="idprofession" Type="int" />
+          <Property Name="personalTestimony" Type="nvarchar" MaxLength="255" />
+          <Property Name="personalTestimonyDoc" Type="varbinary(max)" />
+          <Property Name="idAddress" Type="int" />
+          <Property Name="isMember" Type="smallint" />
+          <Property Name="dateMembership" Type="date" />
+          <Property Name="idEntryPoint" Type="int" Nullable="false" />
+          <Property Name="dateWedding" Type="date" />
+          <Property Name="idFamilyRole" Type="int" />
+          <Property Name="idFamilies" Type="int" />
+          <Property Name="isDeceased" Type="smallint" />
+          <Property Name="idCampus" Type="int" Nullable="false" />
+          <Property Name="idMedicalInfo" Type="int" />
+        </EntityType>
+        <EntityType Name="PersonPhotos">
+          <Key>
+            <PropertyRef Name="idPersonPhotos" />
+          </Key>
+          <Property Name="idPersonPhotos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+          <Property Name="photoPaths" Type="nvarchar" MaxLength="255" />
+          <Property Name="PhotoBLOB" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Profession">
+          <Key>
+            <PropertyRef Name="idprofession" />
+          </Key>
+          <Property Name="idprofession" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="professionName" Type="nvarchar" MaxLength="255" />
+          <Property Name="idIndustry" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusHistory">
+          <Key>
+            <PropertyRef Name="idStatusHistory" />
+          </Key>
+          <Property Name="idStatusHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="startDate" Type="date" />
+          <Property Name="endDate" Type="date" />
+          <Property Name="effectiveDate" Type="date" />
+          <Property Name="statusAtChurch" Type="int" Nullable="false" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudyLevel">
+          <Key>
+            <PropertyRef Name="idstudyLevel" />
+          </Key>
+          <Property Name="idstudyLevel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idStudyLevelType" Type="int" Nullable="false" />
+          <Property Name="fromDate" Type="date" />
+          <Property Name="toDate" Type="date" />
+          <Property Name="nameSchoolOrUniversity" Type="nvarchar" MaxLength="255" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudyLevelType">
+          <Key>
+            <PropertyRef Name="idStudyLevelType" />
+          </Key>
+          <Property Name="idStudyLevelType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameStudyLevelType" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="Address$fk_Address_Country1">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="idCountry" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="idCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Campus$fk_Campus_Campus1">
+          <End Role="Campus" Type="Self.Campus" Multiplicity="0..1" />
+          <End Role="Campus1" Type="Self.Campus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campus">
+              <PropertyRef Name="idCampus" />
+            </Principal>
+            <Dependent Role="Campus1">
+              <PropertyRef Name="parentCampus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Campus$fk_Campus_Country1">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Campus" Type="Self.Campus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="idCountry" />
+            </Principal>
+            <Dependent Role="Campus">
+              <PropertyRef Name="idCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChurchHistory$fk_ChurchHistory_CheckListCategory1">
+          <End Role="CheckListCategory" Type="Self.CheckListCategory" Multiplicity="1" />
+          <End Role="ChurchHistory" Type="Self.ChurchHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckListCategory">
+              <PropertyRef Name="idcheckListCategory" />
+            </Principal>
+            <Dependent Role="ChurchHistory">
+              <PropertyRef Name="roleInChurch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChurchHistory$fk_ChurchHistory_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="ChurchHistory" Type="Self.ChurchHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="ChurchHistory">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmploymentHistory$fk_EmploymentHistory_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="EmploymentHistory" Type="Self.EmploymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="EmploymentHistory">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Families$fk_Families_Address1">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="Families" Type="Self.Families" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="idAddress" />
+            </Principal>
+            <Dependent Role="Families">
+              <PropertyRef Name="idAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaritalStatus$fk_MaritalStatus_MaritalStatusType1">
+          <End Role="MaritalStatusType" Type="Self.MaritalStatusType" Multiplicity="1" />
+          <End Role="MaritalStatus" Type="Self.MaritalStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaritalStatusType">
+              <PropertyRef Name="idMaritalStatusType" />
+            </Principal>
+            <Dependent Role="MaritalStatus">
+              <PropertyRef Name="idMaritalStatusType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaritalStatus$fk_MaritalStatus_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="MaritalStatus" Type="Self.MaritalStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="MaritalStatus">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicalInfo$fk_MedicalInfo_BloodType1">
+          <End Role="BloodType" Type="Self.BloodType" Multiplicity="1" />
+          <End Role="MedicalInfo" Type="Self.MedicalInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodType">
+              <PropertyRef Name="idbloodType" />
+            </Principal>
+            <Dependent Role="MedicalInfo">
+              <PropertyRef Name="idbloodType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_Address1">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="idAddress" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_Campus1">
+          <End Role="Campus" Type="Self.Campus" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campus">
+              <PropertyRef Name="idCampus" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idCampus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_EntryPoint1">
+          <End Role="EntryPoint" Type="Self.EntryPoint" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntryPoint">
+              <PropertyRef Name="idEntryPoint" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idEntryPoint" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_Families1">
+          <End Role="Families" Type="Self.Families" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Families">
+              <PropertyRef Name="idFamilies" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idFamilies" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_FamilyRole1">
+          <End Role="FamilyRole" Type="Self.FamilyRole" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FamilyRole">
+              <PropertyRef Name="idFamilyRole" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idFamilyRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_MedicalInfo1">
+          <End Role="MedicalInfo" Type="Self.MedicalInfo" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalInfo">
+              <PropertyRef Name="idMedicalInfo" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idMedicalInfo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person$fk_Person_profession1">
+          <End Role="Profession" Type="Self.Profession" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="idprofession" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idprofession" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonPhotos$fk_PersonPhotos_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PersonPhotos" Type="Self.PersonPhotos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="PersonPhotos">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Profession$fk_profession_Industry1">
+          <End Role="Industry" Type="Self.Industry" Multiplicity="1" />
+          <End Role="Profession" Type="Self.Profession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Industry">
+              <PropertyRef Name="idIndustry" />
+            </Principal>
+            <Dependent Role="Profession">
+              <PropertyRef Name="idIndustry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusHistory$fk_StatusHistory_CheckListCategory1">
+          <End Role="CheckListCategory" Type="Self.CheckListCategory" Multiplicity="1" />
+          <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckListCategory">
+              <PropertyRef Name="idcheckListCategory" />
+            </Principal>
+            <Dependent Role="StatusHistory">
+              <PropertyRef Name="statusAtChurch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusHistory$fk_StatusHistory_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="StatusHistory">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyLevel$fk_StudyLevel_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="StudyLevel" Type="Self.StudyLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="StudyLevel">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyLevel$fk_StudyLevel_StudyLevelType1">
+          <End Role="StudyLevelType" Type="Self.StudyLevelType" Multiplicity="1" />
+          <End Role="StudyLevel" Type="Self.StudyLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyLevelType">
+              <PropertyRef Name="idStudyLevelType" />
+            </Principal>
+            <Dependent Role="StudyLevel">
+              <PropertyRef Name="idStudyLevelType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="leVillageModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BloodType" EntityType="Self.BloodType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Campus" EntityType="Self.Campus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckListCategory" EntityType="Self.CheckListCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChurchHistory" EntityType="Self.ChurchHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmploymentHistory" EntityType="Self.EmploymentHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntryPoint" EntityType="Self.EntryPoint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Families" EntityType="Self.Families" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FamilyRole" EntityType="Self.FamilyRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Industry" EntityType="Self.Industry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaritalStatusType" EntityType="Self.MaritalStatusType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalInfo" EntityType="Self.MedicalInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonPhotos" EntityType="Self.PersonPhotos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profession" EntityType="Self.Profession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusHistory" EntityType="Self.StatusHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudyLevel" EntityType="Self.StudyLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudyLevelType" EntityType="Self.StudyLevelType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Address$fk_Address_Country1" Association="Self.Address$fk_Address_Country1">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="Campus$fk_Campus_Campus1" Association="Self.Campus$fk_Campus_Campus1">
+            <End Role="Campus" EntitySet="Campus" />
+            <End Role="Campus1" EntitySet="Campus" />
+          </AssociationSet>
+          <AssociationSet Name="Campus$fk_Campus_Country1" Association="Self.Campus$fk_Campus_Country1">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Campus" EntitySet="Campus" />
+          </AssociationSet>
+          <AssociationSet Name="ChurchHistory$fk_ChurchHistory_CheckListCategory1" Association="Self.ChurchHistory$fk_ChurchHistory_CheckListCategory1">
+            <End Role="CheckListCategory" EntitySet="CheckListCategory" />
+            <End Role="ChurchHistory" EntitySet="ChurchHistory" />
+          </AssociationSet>
+          <AssociationSet Name="ChurchHistory$fk_ChurchHistory_Person1" Association="Self.ChurchHistory$fk_ChurchHistory_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="ChurchHistory" EntitySet="ChurchHistory" />
+          </AssociationSet>
+          <AssociationSet Name="EmploymentHistory$fk_EmploymentHistory_Person1" Association="Self.EmploymentHistory$fk_EmploymentHistory_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="EmploymentHistory" EntitySet="EmploymentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="Families$fk_Families_Address1" Association="Self.Families$fk_Families_Address1">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Families" EntitySet="Families" />
+          </AssociationSet>
+          <AssociationSet Name="MaritalStatus$fk_MaritalStatus_MaritalStatusType1" Association="Self.MaritalStatus$fk_MaritalStatus_MaritalStatusType1">
+            <End Role="MaritalStatusType" EntitySet="MaritalStatusType" />
+            <End Role="MaritalStatus" EntitySet="MaritalStatus" />
+          </AssociationSet>
+          <AssociationSet Name="MaritalStatus$fk_MaritalStatus_Person1" Association="Self.MaritalStatus$fk_MaritalStatus_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="MaritalStatus" EntitySet="MaritalStatus" />
+          </AssociationSet>
+          <AssociationSet Name="MedicalInfo$fk_MedicalInfo_BloodType1" Association="Self.MedicalInfo$fk_MedicalInfo_BloodType1">
+            <End Role="BloodType" EntitySet="BloodType" />
+            <End Role="MedicalInfo" EntitySet="MedicalInfo" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_Address1" Association="Self.Person$fk_Person_Address1">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_Campus1" Association="Self.Person$fk_Person_Campus1">
+            <End Role="Campus" EntitySet="Campus" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_EntryPoint1" Association="Self.Person$fk_Person_EntryPoint1">
+            <End Role="EntryPoint" EntitySet="EntryPoint" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_Families1" Association="Self.Person$fk_Person_Families1">
+            <End Role="Families" EntitySet="Families" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_FamilyRole1" Association="Self.Person$fk_Person_FamilyRole1">
+            <End Role="FamilyRole" EntitySet="FamilyRole" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_MedicalInfo1" Association="Self.Person$fk_Person_MedicalInfo1">
+            <End Role="MedicalInfo" EntitySet="MedicalInfo" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="Person$fk_Person_profession1" Association="Self.Person$fk_Person_profession1">
+            <End Role="Profession" EntitySet="Profession" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="PersonPhotos$fk_PersonPhotos_Person1" Association="Self.PersonPhotos$fk_PersonPhotos_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="PersonPhotos" EntitySet="PersonPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="Profession$fk_profession_Industry1" Association="Self.Profession$fk_profession_Industry1">
+            <End Role="Industry" EntitySet="Industry" />
+            <End Role="Profession" EntitySet="Profession" />
+          </AssociationSet>
+          <AssociationSet Name="StatusHistory$fk_StatusHistory_CheckListCategory1" Association="Self.StatusHistory$fk_StatusHistory_CheckListCategory1">
+            <End Role="CheckListCategory" EntitySet="CheckListCategory" />
+            <End Role="StatusHistory" EntitySet="StatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="StatusHistory$fk_StatusHistory_Person1" Association="Self.StatusHistory$fk_StatusHistory_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="StatusHistory" EntitySet="StatusHistory" />
+          </AssociationSet>
+          <AssociationSet Name="StudyLevel$fk_StudyLevel_Person1" Association="Self.StudyLevel$fk_StudyLevel_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="StudyLevel" EntitySet="StudyLevel" />
+          </AssociationSet>
+          <AssociationSet Name="StudyLevel$fk_StudyLevel_StudyLevelType1" Association="Self.StudyLevel$fk_StudyLevel_StudyLevelType1">
+            <End Role="StudyLevelType" EntitySet="StudyLevelType" />
+            <End Role="StudyLevel" EntitySet="StudyLevel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="leVillageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="idAddress" />
+          </Key>
+          <Property Name="idAddress" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="street" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="postalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="idCountry" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="Self.Address_fk_Address_Country1" FromRole="Address" ToRole="Country" />
+          <NavigationProperty Name="Families" Relationship="Self.Families_fk_Families_Address1" FromRole="Address" ToRole="Families" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Address1" FromRole="Address" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="BloodType">
+          <Key>
+            <PropertyRef Name="idbloodType" />
+          </Key>
+          <Property Name="idbloodType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bloodTypeName" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalInfoes" Relationship="Self.MedicalInfo_fk_MedicalInfo_BloodType1" FromRole="BloodType" ToRole="MedicalInfo" />
+        </EntityType>
+        <EntityType Name="Campu">
+          <Key>
+            <PropertyRef Name="idCampus" />
+          </Key>
+          <Property Name="idCampus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campusName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="campusStreet" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="campusCity" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="campusPostalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="idCountry" Type="Int32" Nullable="false" />
+          <Property Name="parentCampus" Type="Int32" />
+          <NavigationProperty Name="Campus1" Relationship="Self.Campus_fk_Campus_Campus1" FromRole="Campus" ToRole="Campus1" />
+          <NavigationProperty Name="Campu1" Relationship="Self.Campus_fk_Campus_Campus1" FromRole="Campus1" ToRole="Campus" />
+          <NavigationProperty Name="Country" Relationship="Self.Campus_fk_Campus_Country1" FromRole="Campus" ToRole="Country" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Campus1" FromRole="Campus" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="CheckListCategory">
+          <Key>
+            <PropertyRef Name="idcheckListCategory" />
+          </Key>
+          <Property Name="idcheckListCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="namecheckListCategory" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="isMemberStatus" Type="Int32" />
+          <NavigationProperty Name="ChurchHistories" Relationship="Self.ChurchHistory_fk_ChurchHistory_CheckListCategory1" FromRole="CheckListCategory" ToRole="ChurchHistory" />
+          <NavigationProperty Name="StatusHistories" Relationship="Self.StatusHistory_fk_StatusHistory_CheckListCategory1" FromRole="CheckListCategory" ToRole="StatusHistory" />
+        </EntityType>
+        <EntityType Name="ChurchHistory">
+          <Key>
+            <PropertyRef Name="idChurchHistory" />
+          </Key>
+          <Property Name="idChurchHistory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="churchName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="pastorName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <Property Name="roleInChurch" Type="Int32" Nullable="false" />
+          <Property Name="comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CheckListCategory" Relationship="Self.ChurchHistory_fk_ChurchHistory_CheckListCategory1" FromRole="ChurchHistory" ToRole="CheckListCategory" />
+          <NavigationProperty Name="Person" Relationship="Self.ChurchHistory_fk_ChurchHistory_Person1" FromRole="ChurchHistory" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="idCountry" />
+          </Key>
+          <Property Name="idCountry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iso_alpha2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="iso_alpha3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="iso_numeric" Type="Int32" />
+          <Property Name="fips_code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="capital" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="areainsqkm" Type="Double" />
+          <Property Name="population" Type="Int32" />
+          <Property Name="continent" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="tld" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="currency" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="currencyName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="postalCodeFormat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="postalCodeRegex" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="geonameId" Type="Int32" />
+          <Property Name="languages" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="neighbours" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="equivalentFipsCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Addresses" Relationship="Self.Address_fk_Address_Country1" FromRole="Country" ToRole="Address" />
+          <NavigationProperty Name="Campus" Relationship="Self.Campus_fk_Campus_Country1" FromRole="Country" ToRole="Campus" />
+        </EntityType>
+        <EntityType Name="EmploymentHistory">
+          <Key>
+            <PropertyRef Name="idEmploymentHistory" />
+          </Key>
+          <Property Name="idEmploymentHistory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployerName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="fromDate" Type="DateTime" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
+          <Property Name="position" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.EmploymentHistory_fk_EmploymentHistory_Person1" FromRole="EmploymentHistory" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="EntryPoint">
+          <Key>
+            <PropertyRef Name="idEntryPoint" />
+          </Key>
+          <Property Name="idEntryPoint" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="entryPointName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="locationEntryPoint" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_EntryPoint1" FromRole="EntryPoint" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="idFamilies" />
+          </Key>
+          <Property Name="idFamilies" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idAddress" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Families_fk_Families_Address1" FromRole="Families" ToRole="Address" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Families1" FromRole="Families" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="FamilyRole">
+          <Key>
+            <PropertyRef Name="idFamilyRole" />
+          </Key>
+          <Property Name="idFamilyRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="familyRoleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="familyRoleCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_FamilyRole1" FromRole="FamilyRole" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Industry">
+          <Key>
+            <PropertyRef Name="idIndustry" />
+          </Key>
+          <Property Name="idIndustry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="industryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Professions" Relationship="Self.Profession_fk_profession_Industry1" FromRole="Industry" ToRole="Profession" />
+        </EntityType>
+        <EntityType Name="MaritalStatu">
+          <Key>
+            <PropertyRef Name="idMaritalStatus" />
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idMaritalStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMaritalStatusType" Type="Int32" Nullable="false" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaritalStatusType" Relationship="Self.MaritalStatus_fk_MaritalStatus_MaritalStatusType1" FromRole="MaritalStatus" ToRole="MaritalStatusType" />
+          <NavigationProperty Name="Person" Relationship="Self.MaritalStatus_fk_MaritalStatus_Person1" FromRole="MaritalStatus" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="MaritalStatusType">
+          <Key>
+            <PropertyRef Name="idMaritalStatusType" />
+          </Key>
+          <Property Name="idMaritalStatusType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameMaritalStatusType" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MaritalStatus" Relationship="Self.MaritalStatus_fk_MaritalStatus_MaritalStatusType1" FromRole="MaritalStatusType" ToRole="MaritalStatus" />
+        </EntityType>
+        <EntityType Name="MedicalInfo">
+          <Key>
+            <PropertyRef Name="idMedicalInfo" />
+          </Key>
+          <Property Name="idMedicalInfo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idbloodType" Type="Int32" Nullable="false" />
+          <Property Name="height" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="allergies" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="pathologies" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="medicines" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="vaccines" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BloodType" Relationship="Self.MedicalInfo_fk_MedicalInfo_BloodType1" FromRole="MedicalInfo" ToRole="BloodType" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_MedicalInfo1" FromRole="MedicalInfo" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idPerson" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="memberIdentificationNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="sex" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="isConverted" Type="Int16" />
+          <Property Name="dateConversion" Type="DateTime" Precision="0" />
+          <Property Name="isBaptized" Type="Int16" />
+          <Property Name="dateBaptism" Type="DateTime" Precision="0" />
+          <Property Name="idprofession" Type="Int32" />
+          <Property Name="personalTestimony" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="personalTestimonyDoc" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="idAddress" Type="Int32" />
+          <Property Name="isMember" Type="Int16" />
+          <Property Name="dateMembership" Type="DateTime" Precision="0" />
+          <Property Name="idEntryPoint" Type="Int32" Nullable="false" />
+          <Property Name="dateWedding" Type="DateTime" Precision="0" />
+          <Property Name="idFamilyRole" Type="Int32" />
+          <Property Name="idFamilies" Type="Int32" />
+          <Property Name="isDeceased" Type="Int16" />
+          <Property Name="idCampus" Type="Int32" Nullable="false" />
+          <Property Name="idMedicalInfo" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="Self.Person_fk_Person_Address1" FromRole="Person" ToRole="Address" />
+          <NavigationProperty Name="Campu" Relationship="Self.Person_fk_Person_Campus1" FromRole="Person" ToRole="Campus" />
+          <NavigationProperty Name="ChurchHistories" Relationship="Self.ChurchHistory_fk_ChurchHistory_Person1" FromRole="Person" ToRole="ChurchHistory" />
+          <NavigationProperty Name="EmploymentHistories" Relationship="Self.EmploymentHistory_fk_EmploymentHistory_Person1" FromRole="Person" ToRole="EmploymentHistory" />
+          <NavigationProperty Name="EntryPoint" Relationship="Self.Person_fk_Person_EntryPoint1" FromRole="Person" ToRole="EntryPoint" />
+          <NavigationProperty Name="Family" Relationship="Self.Person_fk_Person_Families1" FromRole="Person" ToRole="Families" />
+          <NavigationProperty Name="FamilyRole" Relationship="Self.Person_fk_Person_FamilyRole1" FromRole="Person" ToRole="FamilyRole" />
+          <NavigationProperty Name="MaritalStatus" Relationship="Self.MaritalStatus_fk_MaritalStatus_Person1" FromRole="Person" ToRole="MaritalStatus" />
+          <NavigationProperty Name="MedicalInfo" Relationship="Self.Person_fk_Person_MedicalInfo1" FromRole="Person" ToRole="MedicalInfo" />
+          <NavigationProperty Name="Profession" Relationship="Self.Person_fk_Person_profession1" FromRole="Person" ToRole="Profession" />
+          <NavigationProperty Name="PersonPhotos" Relationship="Self.PersonPhotos_fk_PersonPhotos_Person1" FromRole="Person" ToRole="PersonPhotos" />
+          <NavigationProperty Name="StatusHistories" Relationship="Self.StatusHistory_fk_StatusHistory_Person1" FromRole="Person" ToRole="StatusHistory" />
+          <NavigationProperty Name="StudyLevels" Relationship="Self.StudyLevel_fk_StudyLevel_Person1" FromRole="Person" ToRole="StudyLevel" />
+        </EntityType>
+        <EntityType Name="PersonPhoto">
+          <Key>
+            <PropertyRef Name="idPersonPhotos" />
+          </Key>
+          <Property Name="idPersonPhotos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <Property Name="photoPaths" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhotoBLOB" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Person" Relationship="Self.PersonPhotos_fk_PersonPhotos_Person1" FromRole="PersonPhotos" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Profession">
+          <Key>
+            <PropertyRef Name="idprofession" />
+          </Key>
+          <Property Name="idprofession" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="professionName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idIndustry" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Industry" Relationship="Self.Profession_fk_profession_Industry1" FromRole="Profession" ToRole="Industry" />
+          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_profession1" FromRole="Profession" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="StatusHistory">
+          <Key>
+            <PropertyRef Name="idStatusHistory" />
+          </Key>
+          <Property Name="idStatusHistory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="startDate" Type="DateTime" Precision="0" />
+          <Property Name="endDate" Type="DateTime" Precision="0" />
+          <Property Name="effectiveDate" Type="DateTime" Precision="0" />
+          <Property Name="statusAtChurch" Type="Int32" Nullable="false" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CheckListCategory" Relationship="Self.StatusHistory_fk_StatusHistory_CheckListCategory1" FromRole="StatusHistory" ToRole="CheckListCategory" />
+          <NavigationProperty Name="Person" Relationship="Self.StatusHistory_fk_StatusHistory_Person1" FromRole="StatusHistory" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="StudyLevel">
+          <Key>
+            <PropertyRef Name="idstudyLevel" />
+          </Key>
+          <Property Name="idstudyLevel" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idStudyLevelType" Type="Int32" Nullable="false" />
+          <Property Name="fromDate" Type="DateTime" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
+          <Property Name="nameSchoolOrUniversity" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.StudyLevel_fk_StudyLevel_Person1" FromRole="StudyLevel" ToRole="Person" />
+          <NavigationProperty Name="StudyLevelType" Relationship="Self.StudyLevel_fk_StudyLevel_StudyLevelType1" FromRole="StudyLevel" ToRole="StudyLevelType" />
+        </EntityType>
+        <EntityType Name="StudyLevelType">
+          <Key>
+            <PropertyRef Name="idStudyLevelType" />
+          </Key>
+          <Property Name="idStudyLevelType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameStudyLevelType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudyLevels" Relationship="Self.StudyLevel_fk_StudyLevel_StudyLevelType1" FromRole="StudyLevelType" ToRole="StudyLevel" />
+        </EntityType>
+        <Association Name="Address_fk_Address_Country1">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="idCountry" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="idCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Families_fk_Families_Address1">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="Families" Type="Self.Family" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="idAddress" />
+            </Principal>
+            <Dependent Role="Families">
+              <PropertyRef Name="idAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_Address1">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="idAddress" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicalInfo_fk_MedicalInfo_BloodType1">
+          <End Role="BloodType" Type="Self.BloodType" Multiplicity="1" />
+          <End Role="MedicalInfo" Type="Self.MedicalInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodType">
+              <PropertyRef Name="idbloodType" />
+            </Principal>
+            <Dependent Role="MedicalInfo">
+              <PropertyRef Name="idbloodType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Campus_fk_Campus_Campus1">
+          <End Role="Campus" Type="Self.Campu" Multiplicity="0..1" />
+          <End Role="Campus1" Type="Self.Campu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campus">
+              <PropertyRef Name="idCampus" />
+            </Principal>
+            <Dependent Role="Campus1">
+              <PropertyRef Name="parentCampus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Campus_fk_Campus_Country1">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Campus" Type="Self.Campu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="idCountry" />
+            </Principal>
+            <Dependent Role="Campus">
+              <PropertyRef Name="idCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_Campus1">
+          <End Role="Campus" Type="Self.Campu" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campus">
+              <PropertyRef Name="idCampus" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idCampus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChurchHistory_fk_ChurchHistory_CheckListCategory1">
+          <End Role="CheckListCategory" Type="Self.CheckListCategory" Multiplicity="1" />
+          <End Role="ChurchHistory" Type="Self.ChurchHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckListCategory">
+              <PropertyRef Name="idcheckListCategory" />
+            </Principal>
+            <Dependent Role="ChurchHistory">
+              <PropertyRef Name="roleInChurch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusHistory_fk_StatusHistory_CheckListCategory1">
+          <End Role="CheckListCategory" Type="Self.CheckListCategory" Multiplicity="1" />
+          <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckListCategory">
+              <PropertyRef Name="idcheckListCategory" />
+            </Principal>
+            <Dependent Role="StatusHistory">
+              <PropertyRef Name="statusAtChurch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ChurchHistory_fk_ChurchHistory_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="ChurchHistory" Type="Self.ChurchHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="ChurchHistory">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmploymentHistory_fk_EmploymentHistory_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="EmploymentHistory" Type="Self.EmploymentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="EmploymentHistory">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_EntryPoint1">
+          <End Role="EntryPoint" Type="Self.EntryPoint" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EntryPoint">
+              <PropertyRef Name="idEntryPoint" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idEntryPoint" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_Families1">
+          <End Role="Families" Type="Self.Family" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Families">
+              <PropertyRef Name="idFamilies" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idFamilies" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_FamilyRole1">
+          <End Role="FamilyRole" Type="Self.FamilyRole" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FamilyRole">
+              <PropertyRef Name="idFamilyRole" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idFamilyRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Profession_fk_profession_Industry1">
+          <End Role="Industry" Type="Self.Industry" Multiplicity="1" />
+          <End Role="Profession" Type="Self.Profession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Industry">
+              <PropertyRef Name="idIndustry" />
+            </Principal>
+            <Dependent Role="Profession">
+              <PropertyRef Name="idIndustry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaritalStatus_fk_MaritalStatus_MaritalStatusType1">
+          <End Role="MaritalStatusType" Type="Self.MaritalStatusType" Multiplicity="1" />
+          <End Role="MaritalStatus" Type="Self.MaritalStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaritalStatusType">
+              <PropertyRef Name="idMaritalStatusType" />
+            </Principal>
+            <Dependent Role="MaritalStatus">
+              <PropertyRef Name="idMaritalStatusType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaritalStatus_fk_MaritalStatus_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="MaritalStatus" Type="Self.MaritalStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="MaritalStatus">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_MedicalInfo1">
+          <End Role="MedicalInfo" Type="Self.MedicalInfo" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalInfo">
+              <PropertyRef Name="idMedicalInfo" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idMedicalInfo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Person_fk_Person_profession1">
+          <End Role="Profession" Type="Self.Profession" Multiplicity="0..1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="idprofession" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idprofession" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonPhotos_fk_PersonPhotos_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PersonPhotos" Type="Self.PersonPhoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="PersonPhotos">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StatusHistory_fk_StatusHistory_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="StatusHistory" Type="Self.StatusHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="StatusHistory">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyLevel_fk_StudyLevel_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="StudyLevel" Type="Self.StudyLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="StudyLevel">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudyLevel_fk_StudyLevel_StudyLevelType1">
+          <End Role="StudyLevelType" Type="Self.StudyLevelType" Multiplicity="1" />
+          <End Role="StudyLevel" Type="Self.StudyLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyLevelType">
+              <PropertyRef Name="idStudyLevelType" />
+            </Principal>
+            <Dependent Role="StudyLevel">
+              <PropertyRef Name="idStudyLevelType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="leVillageEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="BloodTypes" EntityType="Self.BloodType" />
+          <EntitySet Name="Campus" EntityType="Self.Campu" />
+          <EntitySet Name="CheckListCategories" EntityType="Self.CheckListCategory" />
+          <EntitySet Name="ChurchHistories" EntityType="Self.ChurchHistory" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="EmploymentHistories" EntityType="Self.EmploymentHistory" />
+          <EntitySet Name="EntryPoints" EntityType="Self.EntryPoint" />
+          <EntitySet Name="Families" EntityType="Self.Family" />
+          <EntitySet Name="FamilyRoles" EntityType="Self.FamilyRole" />
+          <EntitySet Name="Industries" EntityType="Self.Industry" />
+          <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatu" />
+          <EntitySet Name="MaritalStatusTypes" EntityType="Self.MaritalStatusType" />
+          <EntitySet Name="MedicalInfoes" EntityType="Self.MedicalInfo" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="PersonPhotos" EntityType="Self.PersonPhoto" />
+          <EntitySet Name="Professions" EntityType="Self.Profession" />
+          <EntitySet Name="StatusHistories" EntityType="Self.StatusHistory" />
+          <EntitySet Name="StudyLevels" EntityType="Self.StudyLevel" />
+          <EntitySet Name="StudyLevelTypes" EntityType="Self.StudyLevelType" />
+          <AssociationSet Name="Address_fk_Address_Country1" Association="Self.Address_fk_Address_Country1">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="Families_fk_Families_Address1" Association="Self.Families_fk_Families_Address1">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Families" EntitySet="Families" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_Address1" Association="Self.Person_fk_Person_Address1">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="MedicalInfo_fk_MedicalInfo_BloodType1" Association="Self.MedicalInfo_fk_MedicalInfo_BloodType1">
+            <End Role="BloodType" EntitySet="BloodTypes" />
+            <End Role="MedicalInfo" EntitySet="MedicalInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="Campus_fk_Campus_Campus1" Association="Self.Campus_fk_Campus_Campus1">
+            <End Role="Campus" EntitySet="Campus" />
+            <End Role="Campus1" EntitySet="Campus" />
+          </AssociationSet>
+          <AssociationSet Name="Campus_fk_Campus_Country1" Association="Self.Campus_fk_Campus_Country1">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Campus" EntitySet="Campus" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_Campus1" Association="Self.Person_fk_Person_Campus1">
+            <End Role="Campus" EntitySet="Campus" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="ChurchHistory_fk_ChurchHistory_CheckListCategory1" Association="Self.ChurchHistory_fk_ChurchHistory_CheckListCategory1">
+            <End Role="CheckListCategory" EntitySet="CheckListCategories" />
+            <End Role="ChurchHistory" EntitySet="ChurchHistories" />
+          </AssociationSet>
+          <AssociationSet Name="StatusHistory_fk_StatusHistory_CheckListCategory1" Association="Self.StatusHistory_fk_StatusHistory_CheckListCategory1">
+            <End Role="CheckListCategory" EntitySet="CheckListCategories" />
+            <End Role="StatusHistory" EntitySet="StatusHistories" />
+          </AssociationSet>
+          <AssociationSet Name="ChurchHistory_fk_ChurchHistory_Person1" Association="Self.ChurchHistory_fk_ChurchHistory_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="ChurchHistory" EntitySet="ChurchHistories" />
+          </AssociationSet>
+          <AssociationSet Name="EmploymentHistory_fk_EmploymentHistory_Person1" Association="Self.EmploymentHistory_fk_EmploymentHistory_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="EmploymentHistory" EntitySet="EmploymentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_EntryPoint1" Association="Self.Person_fk_Person_EntryPoint1">
+            <End Role="EntryPoint" EntitySet="EntryPoints" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_Families1" Association="Self.Person_fk_Person_Families1">
+            <End Role="Families" EntitySet="Families" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_FamilyRole1" Association="Self.Person_fk_Person_FamilyRole1">
+            <End Role="FamilyRole" EntitySet="FamilyRoles" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Profession_fk_profession_Industry1" Association="Self.Profession_fk_profession_Industry1">
+            <End Role="Industry" EntitySet="Industries" />
+            <End Role="Profession" EntitySet="Professions" />
+          </AssociationSet>
+          <AssociationSet Name="MaritalStatus_fk_MaritalStatus_MaritalStatusType1" Association="Self.MaritalStatus_fk_MaritalStatus_MaritalStatusType1">
+            <End Role="MaritalStatusType" EntitySet="MaritalStatusTypes" />
+            <End Role="MaritalStatus" EntitySet="MaritalStatus" />
+          </AssociationSet>
+          <AssociationSet Name="MaritalStatus_fk_MaritalStatus_Person1" Association="Self.MaritalStatus_fk_MaritalStatus_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="MaritalStatus" EntitySet="MaritalStatus" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_MedicalInfo1" Association="Self.Person_fk_Person_MedicalInfo1">
+            <End Role="MedicalInfo" EntitySet="MedicalInfoes" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Person_fk_Person_profession1" Association="Self.Person_fk_Person_profession1">
+            <End Role="Profession" EntitySet="Professions" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="PersonPhotos_fk_PersonPhotos_Person1" Association="Self.PersonPhotos_fk_PersonPhotos_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="PersonPhotos" EntitySet="PersonPhotos" />
+          </AssociationSet>
+          <AssociationSet Name="StatusHistory_fk_StatusHistory_Person1" Association="Self.StatusHistory_fk_StatusHistory_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="StatusHistory" EntitySet="StatusHistories" />
+          </AssociationSet>
+          <AssociationSet Name="StudyLevel_fk_StudyLevel_Person1" Association="Self.StudyLevel_fk_StudyLevel_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="StudyLevel" EntitySet="StudyLevels" />
+          </AssociationSet>
+          <AssociationSet Name="StudyLevel_fk_StudyLevel_StudyLevelType1" Association="Self.StudyLevel_fk_StudyLevel_StudyLevelType1">
+            <End Role="StudyLevelType" EntitySet="StudyLevelTypes" />
+            <End Role="StudyLevel" EntitySet="StudyLevels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="leVillageModelStoreContainer" CdmEntityContainer="leVillageEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="leVillageModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="idAddress" ColumnName="idAddress" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="idCountry" ColumnName="idCountry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BloodTypes">
+            <EntityTypeMapping TypeName="leVillageModel.BloodType">
+              <MappingFragment StoreEntitySet="BloodType">
+                <ScalarProperty Name="idbloodType" ColumnName="idbloodType" />
+                <ScalarProperty Name="bloodTypeName" ColumnName="bloodTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Campus">
+            <EntityTypeMapping TypeName="leVillageModel.Campu">
+              <MappingFragment StoreEntitySet="Campus">
+                <ScalarProperty Name="idCampus" ColumnName="idCampus" />
+                <ScalarProperty Name="campusName" ColumnName="campusName" />
+                <ScalarProperty Name="campusStreet" ColumnName="campusStreet" />
+                <ScalarProperty Name="campusCity" ColumnName="campusCity" />
+                <ScalarProperty Name="campusPostalCode" ColumnName="campusPostalCode" />
+                <ScalarProperty Name="idCountry" ColumnName="idCountry" />
+                <ScalarProperty Name="parentCampus" ColumnName="parentCampus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckListCategories">
+            <EntityTypeMapping TypeName="leVillageModel.CheckListCategory">
+              <MappingFragment StoreEntitySet="CheckListCategory">
+                <ScalarProperty Name="idcheckListCategory" ColumnName="idcheckListCategory" />
+                <ScalarProperty Name="namecheckListCategory" ColumnName="namecheckListCategory" />
+                <ScalarProperty Name="isMemberStatus" ColumnName="isMemberStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChurchHistories">
+            <EntityTypeMapping TypeName="leVillageModel.ChurchHistory">
+              <MappingFragment StoreEntitySet="ChurchHistory">
+                <ScalarProperty Name="idChurchHistory" ColumnName="idChurchHistory" />
+                <ScalarProperty Name="churchName" ColumnName="churchName" />
+                <ScalarProperty Name="pastorName" ColumnName="pastorName" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+                <ScalarProperty Name="roleInChurch" ColumnName="roleInChurch" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="leVillageModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="idCountry" ColumnName="idCountry" />
+                <ScalarProperty Name="iso_alpha2" ColumnName="iso_alpha2" />
+                <ScalarProperty Name="iso_alpha3" ColumnName="iso_alpha3" />
+                <ScalarProperty Name="iso_numeric" ColumnName="iso_numeric" />
+                <ScalarProperty Name="fips_code" ColumnName="fips_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="capital" ColumnName="capital" />
+                <ScalarProperty Name="areainsqkm" ColumnName="areainsqkm" />
+                <ScalarProperty Name="population" ColumnName="population" />
+                <ScalarProperty Name="continent" ColumnName="continent" />
+                <ScalarProperty Name="tld" ColumnName="tld" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="currencyName" ColumnName="currencyName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="postalCodeFormat" ColumnName="postalCodeFormat" />
+                <ScalarProperty Name="postalCodeRegex" ColumnName="postalCodeRegex" />
+                <ScalarProperty Name="geonameId" ColumnName="geonameId" />
+                <ScalarProperty Name="languages" ColumnName="languages" />
+                <ScalarProperty Name="neighbours" ColumnName="neighbours" />
+                <ScalarProperty Name="equivalentFipsCode" ColumnName="equivalentFipsCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmploymentHistories">
+            <EntityTypeMapping TypeName="leVillageModel.EmploymentHistory">
+              <MappingFragment StoreEntitySet="EmploymentHistory">
+                <ScalarProperty Name="idEmploymentHistory" ColumnName="idEmploymentHistory" />
+                <ScalarProperty Name="EmployerName" ColumnName="EmployerName" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="toDate" ColumnName="toDate" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntryPoints">
+            <EntityTypeMapping TypeName="leVillageModel.EntryPoint">
+              <MappingFragment StoreEntitySet="EntryPoint">
+                <ScalarProperty Name="idEntryPoint" ColumnName="idEntryPoint" />
+                <ScalarProperty Name="entryPointName" ColumnName="entryPointName" />
+                <ScalarProperty Name="locationEntryPoint" ColumnName="locationEntryPoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Families">
+            <EntityTypeMapping TypeName="leVillageModel.Family">
+              <MappingFragment StoreEntitySet="Families">
+                <ScalarProperty Name="idFamilies" ColumnName="idFamilies" />
+                <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+                <ScalarProperty Name="idAddress" ColumnName="idAddress" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FamilyRoles">
+            <EntityTypeMapping TypeName="leVillageModel.FamilyRole">
+              <MappingFragment StoreEntitySet="FamilyRole">
+                <ScalarProperty Name="idFamilyRole" ColumnName="idFamilyRole" />
+                <ScalarProperty Name="familyRoleName" ColumnName="familyRoleName" />
+                <ScalarProperty Name="familyRoleCode" ColumnName="familyRoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Industries">
+            <EntityTypeMapping TypeName="leVillageModel.Industry">
+              <MappingFragment StoreEntitySet="Industry">
+                <ScalarProperty Name="idIndustry" ColumnName="idIndustry" />
+                <ScalarProperty Name="industryName" ColumnName="industryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaritalStatus">
+            <EntityTypeMapping TypeName="leVillageModel.MaritalStatu">
+              <MappingFragment StoreEntitySet="MaritalStatus">
+                <ScalarProperty Name="idMaritalStatus" ColumnName="idMaritalStatus" />
+                <ScalarProperty Name="idMaritalStatusType" ColumnName="idMaritalStatusType" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaritalStatusTypes">
+            <EntityTypeMapping TypeName="leVillageModel.MaritalStatusType">
+              <MappingFragment StoreEntitySet="MaritalStatusType">
+                <ScalarProperty Name="idMaritalStatusType" ColumnName="idMaritalStatusType" />
+                <ScalarProperty Name="nameMaritalStatusType" ColumnName="nameMaritalStatusType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalInfoes">
+            <EntityTypeMapping TypeName="leVillageModel.MedicalInfo">
+              <MappingFragment StoreEntitySet="MedicalInfo">
+                <ScalarProperty Name="idMedicalInfo" ColumnName="idMedicalInfo" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="DoctorPhone" ColumnName="DoctorPhone" />
+                <ScalarProperty Name="DoctorEmail" ColumnName="DoctorEmail" />
+                <ScalarProperty Name="idbloodType" ColumnName="idbloodType" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="allergies" ColumnName="allergies" />
+                <ScalarProperty Name="pathologies" ColumnName="pathologies" />
+                <ScalarProperty Name="medicines" ColumnName="medicines" />
+                <ScalarProperty Name="vaccines" ColumnName="vaccines" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="leVillageModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+                <ScalarProperty Name="memberIdentificationNumber" ColumnName="memberIdentificationNumber" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="isConverted" ColumnName="isConverted" />
+                <ScalarProperty Name="dateConversion" ColumnName="dateConversion" />
+                <ScalarProperty Name="isBaptized" ColumnName="isBaptized" />
+                <ScalarProperty Name="dateBaptism" ColumnName="dateBaptism" />
+                <ScalarProperty Name="idprofession" ColumnName="idprofession" />
+                <ScalarProperty Name="personalTestimony" ColumnName="personalTestimony" />
+                <ScalarProperty Name="personalTestimonyDoc" ColumnName="personalTestimonyDoc" />
+                <ScalarProperty Name="idAddress" ColumnName="idAddress" />
+                <ScalarProperty Name="isMember" ColumnName="isMember" />
+                <ScalarProperty Name="dateMembership" ColumnName="dateMembership" />
+                <ScalarProperty Name="idEntryPoint" ColumnName="idEntryPoint" />
+                <ScalarProperty Name="dateWedding" ColumnName="dateWedding" />
+                <ScalarProperty Name="idFamilyRole" ColumnName="idFamilyRole" />
+                <ScalarProperty Name="idFamilies" ColumnName="idFamilies" />
+                <ScalarProperty Name="isDeceased" ColumnName="isDeceased" />
+                <ScalarProperty Name="idCampus" ColumnName="idCampus" />
+                <ScalarProperty Name="idMedicalInfo" ColumnName="idMedicalInfo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonPhotos">
+            <EntityTypeMapping TypeName="leVillageModel.PersonPhoto">
+              <MappingFragment StoreEntitySet="PersonPhotos">
+                <ScalarProperty Name="idPersonPhotos" ColumnName="idPersonPhotos" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+                <ScalarProperty Name="photoPaths" ColumnName="photoPaths" />
+                <ScalarProperty Name="PhotoBLOB" ColumnName="PhotoBLOB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professions">
+            <EntityTypeMapping TypeName="leVillageModel.Profession">
+              <MappingFragment StoreEntitySet="Profession">
+                <ScalarProperty Name="idprofession" ColumnName="idprofession" />
+                <ScalarProperty Name="professionName" ColumnName="professionName" />
+                <ScalarProperty Name="idIndustry" ColumnName="idIndustry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusHistories">
+            <EntityTypeMapping TypeName="leVillageModel.StatusHistory">
+              <MappingFragment StoreEntitySet="StatusHistory">
+                <ScalarProperty Name="idStatusHistory" ColumnName="idStatusHistory" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="effectiveDate" ColumnName="effectiveDate" />
+                <ScalarProperty Name="statusAtChurch" ColumnName="statusAtChurch" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudyLevels">
+            <EntityTypeMapping TypeName="leVillageModel.StudyLevel">
+              <MappingFragment StoreEntitySet="StudyLevel">
+                <ScalarProperty Name="idstudyLevel" ColumnName="idstudyLevel" />
+                <ScalarProperty Name="idStudyLevelType" ColumnName="idStudyLevelType" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="toDate" ColumnName="toDate" />
+                <ScalarProperty Name="nameSchoolOrUniversity" ColumnName="nameSchoolOrUniversity" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudyLevelTypes">
+            <EntityTypeMapping TypeName="leVillageModel.StudyLevelType">
+              <MappingFragment StoreEntitySet="StudyLevelType">
+                <ScalarProperty Name="idStudyLevelType" ColumnName="idStudyLevelType" />
+                <ScalarProperty Name="nameStudyLevelType" ColumnName="nameStudyLevelType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
