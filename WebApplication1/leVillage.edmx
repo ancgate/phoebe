@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="leVillageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="leVillageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="idAddress" />
@@ -33,7 +33,6 @@
           <Property Name="campusCity" Type="nvarchar" MaxLength="45" />
           <Property Name="campusPostalCode" Type="nvarchar" MaxLength="45" />
           <Property Name="idCountry" Type="int" Nullable="false" />
-          <Property Name="parentCampus" Type="int" />
         </EntityType>
         <EntityType Name="CheckListCategory">
           <Key>
@@ -78,6 +77,51 @@
           <Property Name="languages" Type="nvarchar" MaxLength="200" />
           <Property Name="neighbours" Type="nchar" MaxLength="100" />
           <Property Name="equivalentFipsCode" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="idCurrency" />
+          </Key>
+          <Property Name="idCurrency" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="currencyCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="currencyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="currencyImage" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="idDocuments" />
+          </Key>
+          <Property Name="idDocuments" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="documentsName" Type="nvarchar" MaxLength="255" />
+          <Property Name="documentsPath" Type="nvarchar" MaxLength="255" />
+          <Property Name="accessCount" Type="int" />
+          <Property Name="documentsDetails" Type="nvarchar" MaxLength="1000" />
+          <Property Name="dateUploaded" Type="datetime2" Precision="0" />
+          <Property Name="uploadedBy" Type="nvarchar" MaxLength="45" />
+          <Property Name="idDocumentType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentsPerson">
+          <Key>
+            <PropertyRef Name="idDocuments" />
+            <PropertyRef Name="idPerson" />
+          </Key>
+          <Property Name="idDocuments" Type="int" Nullable="false" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentsTag">
+          <Key>
+            <PropertyRef Name="idDocuments" />
+            <PropertyRef Name="idTag" />
+          </Key>
+          <Property Name="idDocuments" Type="int" Nullable="false" />
+          <Property Name="idTag" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentType">
+          <Key>
+            <PropertyRef Name="idDocumentType" />
+          </Key>
+          <Property Name="idDocumentType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="documentTypeName" Type="nvarchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="EmploymentHistory">
           <Key>
@@ -146,9 +190,9 @@
             <PropertyRef Name="idMedicalInfo" />
           </Key>
           <Property Name="idMedicalInfo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DoctorName" Type="nvarchar" MaxLength="255" />
-          <Property Name="DoctorPhone" Type="nvarchar" MaxLength="255" />
-          <Property Name="DoctorEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="doctorName" Type="nvarchar" MaxLength="255" />
+          <Property Name="doctorPhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="doctorEmail" Type="nvarchar" MaxLength="255" />
           <Property Name="idbloodType" Type="int" Nullable="false" />
           <Property Name="height" Type="nvarchar" MaxLength="45" />
           <Property Name="allergies" Type="nvarchar" MaxLength="1000" />
@@ -156,6 +200,19 @@
           <Property Name="medicines" Type="nvarchar" MaxLength="1000" />
           <Property Name="vaccines" Type="nvarchar" MaxLength="1000" />
           <Property Name="comments" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Notes">
+          <Key>
+            <PropertyRef Name="idNotes" />
+          </Key>
+          <Property Name="idNotes" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="notesDescription" Type="nvarchar" MaxLength="1000" />
+          <Property Name="createdDate" Type="datetime2" Precision="0" />
+          <Property Name="modifiedDate" Type="datetime2" Precision="0" />
+          <Property Name="createdBy" Type="nvarchar" MaxLength="45" />
+          <Property Name="modifiedBy" Type="nvarchar" MaxLength="45" />
+          <Property Name="idNoteType" Type="int" Nullable="false" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -174,8 +231,6 @@
           <Property Name="isBaptized" Type="smallint" />
           <Property Name="dateBaptism" Type="date" />
           <Property Name="idprofession" Type="int" />
-          <Property Name="personalTestimony" Type="nvarchar" MaxLength="255" />
-          <Property Name="personalTestimonyDoc" Type="varbinary(max)" />
           <Property Name="idAddress" Type="int" />
           <Property Name="isMember" Type="smallint" />
           <Property Name="dateMembership" Type="date" />
@@ -233,6 +288,17 @@
           <Property Name="idStudyLevelType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nameStudyLevelType" Type="nvarchar" MaxLength="45" />
         </EntityType>
+        <EntityType Name="Tithes">
+          <Key>
+            <PropertyRef Name="idTithes" />
+          </Key>
+          <Property Name="idTithes" Type="int" Nullable="false" />
+          <Property Name="titheDate" Type="datetime2" Precision="0" />
+          <Property Name="titheAmount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="titheComment" Type="nvarchar" MaxLength="255" />
+          <Property Name="idService" Type="int" Nullable="false" />
+          <Property Name="idPerson" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="Address$fk_Address_Country1">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
@@ -242,18 +308,6 @@
             </Principal>
             <Dependent Role="Address">
               <PropertyRef Name="idCountry" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Campus$fk_Campus_Campus1">
-          <End Role="Campus" Type="Self.Campus" Multiplicity="0..1" />
-          <End Role="Campus1" Type="Self.Campus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Campus">
-              <PropertyRef Name="idCampus" />
-            </Principal>
-            <Dependent Role="Campus1">
-              <PropertyRef Name="parentCampus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -290,6 +344,54 @@
             </Principal>
             <Dependent Role="ChurchHistory">
               <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Documents$fk_Documents_DocumentType1">
+          <End Role="DocumentType" Type="Self.DocumentType" Multiplicity="1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentType">
+              <PropertyRef Name="idDocumentType" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="idDocumentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentsPerson$fk_Documents_has_Person_Documents1">
+          <End Role="Documents" Type="Self.Documents" Multiplicity="1" />
+          <End Role="DocumentsPerson" Type="Self.DocumentsPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documents">
+              <PropertyRef Name="idDocuments" />
+            </Principal>
+            <Dependent Role="DocumentsPerson">
+              <PropertyRef Name="idDocuments" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentsPerson$fk_Documents_has_Person_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="DocumentsPerson" Type="Self.DocumentsPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="DocumentsPerson">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentsTag$fk_Documents_has_Tag_Documents1">
+          <End Role="Documents" Type="Self.Documents" Multiplicity="1" />
+          <End Role="DocumentsTag" Type="Self.DocumentsTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documents">
+              <PropertyRef Name="idDocuments" />
+            </Principal>
+            <Dependent Role="DocumentsTag">
+              <PropertyRef Name="idDocuments" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -350,6 +452,18 @@
             </Principal>
             <Dependent Role="MedicalInfo">
               <PropertyRef Name="idbloodType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Notes$fk_Notes_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="idPerson" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -509,6 +623,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Tithes$fk_Tithes_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Tithes" Type="Self.Tithes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="Tithes">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="leVillageModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodType" EntityType="Self.BloodType" Schema="dbo" store:Type="Tables" />
@@ -516,6 +642,11 @@
           <EntitySet Name="CheckListCategory" EntityType="Self.CheckListCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChurchHistory" EntityType="Self.ChurchHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentsPerson" EntityType="Self.DocumentsPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentsTag" EntityType="Self.DocumentsTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentType" EntityType="Self.DocumentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmploymentHistory" EntityType="Self.EmploymentHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntryPoint" EntityType="Self.EntryPoint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Families" EntityType="Self.Families" Schema="dbo" store:Type="Tables" />
@@ -524,19 +655,17 @@
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaritalStatusType" EntityType="Self.MaritalStatusType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalInfo" EntityType="Self.MedicalInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonPhotos" EntityType="Self.PersonPhotos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profession" EntityType="Self.Profession" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StatusHistory" EntityType="Self.StatusHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevel" EntityType="Self.StudyLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudyLevelType" EntityType="Self.StudyLevelType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tithes" EntityType="Self.Tithes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="Address$fk_Address_Country1" Association="Self.Address$fk_Address_Country1">
             <End Role="Country" EntitySet="Country" />
             <End Role="Address" EntitySet="Address" />
-          </AssociationSet>
-          <AssociationSet Name="Campus$fk_Campus_Campus1" Association="Self.Campus$fk_Campus_Campus1">
-            <End Role="Campus" EntitySet="Campus" />
-            <End Role="Campus1" EntitySet="Campus" />
           </AssociationSet>
           <AssociationSet Name="Campus$fk_Campus_Country1" Association="Self.Campus$fk_Campus_Country1">
             <End Role="Country" EntitySet="Country" />
@@ -549,6 +678,22 @@
           <AssociationSet Name="ChurchHistory$fk_ChurchHistory_Person1" Association="Self.ChurchHistory$fk_ChurchHistory_Person1">
             <End Role="Person" EntitySet="Person" />
             <End Role="ChurchHistory" EntitySet="ChurchHistory" />
+          </AssociationSet>
+          <AssociationSet Name="Documents$fk_Documents_DocumentType1" Association="Self.Documents$fk_Documents_DocumentType1">
+            <End Role="DocumentType" EntitySet="DocumentType" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentsPerson$fk_Documents_has_Person_Documents1" Association="Self.DocumentsPerson$fk_Documents_has_Person_Documents1">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="DocumentsPerson" EntitySet="DocumentsPerson" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentsPerson$fk_Documents_has_Person_Person1" Association="Self.DocumentsPerson$fk_Documents_has_Person_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="DocumentsPerson" EntitySet="DocumentsPerson" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentsTag$fk_Documents_has_Tag_Documents1" Association="Self.DocumentsTag$fk_Documents_has_Tag_Documents1">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="DocumentsTag" EntitySet="DocumentsTag" />
           </AssociationSet>
           <AssociationSet Name="EmploymentHistory$fk_EmploymentHistory_Person1" Association="Self.EmploymentHistory$fk_EmploymentHistory_Person1">
             <End Role="Person" EntitySet="Person" />
@@ -569,6 +714,10 @@
           <AssociationSet Name="MedicalInfo$fk_MedicalInfo_BloodType1" Association="Self.MedicalInfo$fk_MedicalInfo_BloodType1">
             <End Role="BloodType" EntitySet="BloodType" />
             <End Role="MedicalInfo" EntitySet="MedicalInfo" />
+          </AssociationSet>
+          <AssociationSet Name="Notes$fk_Notes_Person1" Association="Self.Notes$fk_Notes_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Notes" EntitySet="Notes" />
           </AssociationSet>
           <AssociationSet Name="Person$fk_Person_Address1" Association="Self.Person$fk_Person_Address1">
             <End Role="Address" EntitySet="Address" />
@@ -622,9 +771,12 @@
             <End Role="StudyLevelType" EntitySet="StudyLevelType" />
             <End Role="StudyLevel" EntitySet="StudyLevel" />
           </AssociationSet>
+          <AssociationSet Name="Tithes$fk_Tithes_Person1" Association="Self.Tithes$fk_Tithes_Person1">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Tithes" EntitySet="Tithes" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="leVillageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -638,9 +790,9 @@
           <Property Name="state" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="postalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="idCountry" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Country" Relationship="Self.Address_fk_Address_Country1" FromRole="Address" ToRole="Country" />
           <NavigationProperty Name="Families" Relationship="Self.Families_fk_Families_Address1" FromRole="Address" ToRole="Families" />
           <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Address1" FromRole="Address" ToRole="Person" />
+          <NavigationProperty Name="Country" Relationship="leVillageModel.Address_fk_Address_Country1" FromRole="Address" ToRole="Country" />
         </EntityType>
         <EntityType Name="BloodType">
           <Key>
@@ -660,11 +812,8 @@
           <Property Name="campusCity" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="campusPostalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="idCountry" Type="Int32" Nullable="false" />
-          <Property Name="parentCampus" Type="Int32" />
-          <NavigationProperty Name="Campus1" Relationship="Self.Campus_fk_Campus_Campus1" FromRole="Campus" ToRole="Campus1" />
-          <NavigationProperty Name="Campu1" Relationship="Self.Campus_fk_Campus_Campus1" FromRole="Campus1" ToRole="Campus" />
-          <NavigationProperty Name="Country" Relationship="Self.Campus_fk_Campus_Country1" FromRole="Campus" ToRole="Country" />
           <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Campus1" FromRole="Campus" ToRole="Person" />
+          <NavigationProperty Name="Country" Relationship="leVillageModel.Campus_fk_Campus_Country1" FromRole="Campu" ToRole="Country" />
         </EntityType>
         <EntityType Name="CheckListCategory">
           <Key>
@@ -689,32 +838,38 @@
           <NavigationProperty Name="CheckListCategory" Relationship="Self.ChurchHistory_fk_ChurchHistory_CheckListCategory1" FromRole="ChurchHistory" ToRole="CheckListCategory" />
           <NavigationProperty Name="Person" Relationship="Self.ChurchHistory_fk_ChurchHistory_Person1" FromRole="ChurchHistory" ToRole="Person" />
         </EntityType>
-        <EntityType Name="Country">
+        <EntityType Name="Document">
           <Key>
-            <PropertyRef Name="idCountry" />
+            <PropertyRef Name="idDocuments" />
           </Key>
-          <Property Name="idCountry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="iso_alpha2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="iso_alpha3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="iso_numeric" Type="Int32" />
-          <Property Name="fips_code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="capital" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="areainsqkm" Type="Double" />
-          <Property Name="population" Type="Int32" />
-          <Property Name="continent" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="tld" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="currency" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="currencyName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="postalCodeFormat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="postalCodeRegex" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="geonameId" Type="Int32" />
-          <Property Name="languages" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="neighbours" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="equivalentFipsCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Addresses" Relationship="Self.Address_fk_Address_Country1" FromRole="Country" ToRole="Address" />
-          <NavigationProperty Name="Campus" Relationship="Self.Campus_fk_Campus_Country1" FromRole="Country" ToRole="Campus" />
+          <Property Name="idDocuments" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="documentsName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="documentsPath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="accessCount" Type="Int32" />
+          <Property Name="documentsDetails" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="dateUploaded" Type="DateTime" Precision="0" />
+          <Property Name="uploadedBy" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="idDocumentType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DocumentType" Relationship="Self.Documents_fk_Documents_DocumentType1" FromRole="Documents" ToRole="DocumentType" />
+          <NavigationProperty Name="DocumentsTags" Relationship="Self.DocumentsTag_fk_Documents_has_Tag_Documents1" FromRole="Documents" ToRole="DocumentsTag" />
+          <NavigationProperty Name="People" Relationship="Self.DocumentsPerson" FromRole="Documents" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="DocumentsTag">
+          <Key>
+            <PropertyRef Name="idDocuments" />
+            <PropertyRef Name="idTag" />
+          </Key>
+          <Property Name="idDocuments" Type="Int32" Nullable="false" />
+          <Property Name="idTag" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Document" Relationship="Self.DocumentsTag_fk_Documents_has_Tag_Documents1" FromRole="DocumentsTag" ToRole="Documents" />
+        </EntityType>
+        <EntityType Name="DocumentType">
+          <Key>
+            <PropertyRef Name="idDocumentType" />
+          </Key>
+          <Property Name="idDocumentType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="documentTypeName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documents" Relationship="Self.Documents_fk_Documents_DocumentType1" FromRole="DocumentType" ToRole="Documents" />
         </EntityType>
         <EntityType Name="EmploymentHistory">
           <Key>
@@ -749,23 +904,6 @@
           <NavigationProperty Name="Address" Relationship="Self.Families_fk_Families_Address1" FromRole="Families" ToRole="Address" />
           <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Families1" FromRole="Families" ToRole="Person" />
         </EntityType>
-        <EntityType Name="FamilyRole">
-          <Key>
-            <PropertyRef Name="idFamilyRole" />
-          </Key>
-          <Property Name="idFamilyRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="familyRoleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="familyRoleCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_FamilyRole1" FromRole="FamilyRole" ToRole="Person" />
-        </EntityType>
-        <EntityType Name="Industry">
-          <Key>
-            <PropertyRef Name="idIndustry" />
-          </Key>
-          <Property Name="idIndustry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="industryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Professions" Relationship="Self.Profession_fk_profession_Industry1" FromRole="Industry" ToRole="Profession" />
-        </EntityType>
         <EntityType Name="MaritalStatu">
           <Key>
             <PropertyRef Name="idMaritalStatus" />
@@ -792,9 +930,9 @@
             <PropertyRef Name="idMedicalInfo" />
           </Key>
           <Property Name="idMedicalInfo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DoctorName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DoctorPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DoctorEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="doctorName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="doctorPhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="doctorEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="idbloodType" Type="Int32" Nullable="false" />
           <Property Name="height" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="allergies" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
@@ -804,6 +942,20 @@
           <Property Name="comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BloodType" Relationship="Self.MedicalInfo_fk_MedicalInfo_BloodType1" FromRole="MedicalInfo" ToRole="BloodType" />
           <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_MedicalInfo1" FromRole="MedicalInfo" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="idNotes" />
+          </Key>
+          <Property Name="idNotes" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="notesDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="createdDate" Type="DateTime" Precision="0" />
+          <Property Name="modifiedDate" Type="DateTime" Precision="0" />
+          <Property Name="createdBy" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="modifiedBy" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="idNoteType" Type="Int32" Nullable="false" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.Notes_fk_Notes_Person1" FromRole="Notes" ToRole="Person" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -822,8 +974,6 @@
           <Property Name="isBaptized" Type="Int16" />
           <Property Name="dateBaptism" Type="DateTime" Precision="0" />
           <Property Name="idprofession" Type="Int32" />
-          <Property Name="personalTestimony" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="personalTestimonyDoc" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="idAddress" Type="Int32" />
           <Property Name="isMember" Type="Int16" />
           <Property Name="dateMembership" Type="DateTime" Precision="0" />
@@ -840,13 +990,16 @@
           <NavigationProperty Name="EmploymentHistories" Relationship="Self.EmploymentHistory_fk_EmploymentHistory_Person1" FromRole="Person" ToRole="EmploymentHistory" />
           <NavigationProperty Name="EntryPoint" Relationship="Self.Person_fk_Person_EntryPoint1" FromRole="Person" ToRole="EntryPoint" />
           <NavigationProperty Name="Family" Relationship="Self.Person_fk_Person_Families1" FromRole="Person" ToRole="Families" />
-          <NavigationProperty Name="FamilyRole" Relationship="Self.Person_fk_Person_FamilyRole1" FromRole="Person" ToRole="FamilyRole" />
           <NavigationProperty Name="MaritalStatus" Relationship="Self.MaritalStatus_fk_MaritalStatus_Person1" FromRole="Person" ToRole="MaritalStatus" />
           <NavigationProperty Name="MedicalInfo" Relationship="Self.Person_fk_Person_MedicalInfo1" FromRole="Person" ToRole="MedicalInfo" />
+          <NavigationProperty Name="Notes" Relationship="Self.Notes_fk_Notes_Person1" FromRole="Person" ToRole="Notes" />
           <NavigationProperty Name="Profession" Relationship="Self.Person_fk_Person_profession1" FromRole="Person" ToRole="Profession" />
           <NavigationProperty Name="PersonPhotos" Relationship="Self.PersonPhotos_fk_PersonPhotos_Person1" FromRole="Person" ToRole="PersonPhotos" />
           <NavigationProperty Name="StatusHistories" Relationship="Self.StatusHistory_fk_StatusHistory_Person1" FromRole="Person" ToRole="StatusHistory" />
           <NavigationProperty Name="StudyLevels" Relationship="Self.StudyLevel_fk_StudyLevel_Person1" FromRole="Person" ToRole="StudyLevel" />
+          <NavigationProperty Name="Tithes" Relationship="Self.Tithes_fk_Tithes_Person1" FromRole="Person" ToRole="Tithes" />
+          <NavigationProperty Name="Documents" Relationship="Self.DocumentsPerson" FromRole="Person" ToRole="Documents" />
+          <NavigationProperty Name="FamilyRole" Relationship="leVillageModel.Person_fk_Person_FamilyRole1" FromRole="Person" ToRole="FamilyRole" />
         </EntityType>
         <EntityType Name="PersonPhoto">
           <Key>
@@ -865,8 +1018,8 @@
           <Property Name="idprofession" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="professionName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="idIndustry" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Industry" Relationship="Self.Profession_fk_profession_Industry1" FromRole="Profession" ToRole="Industry" />
           <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_profession1" FromRole="Profession" ToRole="Person" />
+          <NavigationProperty Name="Industry" Relationship="leVillageModel.Profession_fk_profession_Industry1" FromRole="Profession" ToRole="Industry" />
         </EntityType>
         <EntityType Name="StatusHistory">
           <Key>
@@ -902,18 +1055,18 @@
           <Property Name="nameStudyLevelType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StudyLevels" Relationship="Self.StudyLevel_fk_StudyLevel_StudyLevelType1" FromRole="StudyLevelType" ToRole="StudyLevel" />
         </EntityType>
-        <Association Name="Address_fk_Address_Country1">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Address" Type="Self.Address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="idCountry" />
-            </Principal>
-            <Dependent Role="Address">
-              <PropertyRef Name="idCountry" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="Tithe">
+          <Key>
+            <PropertyRef Name="idTithes" />
+          </Key>
+          <Property Name="idTithes" Type="Int32" Nullable="false" />
+          <Property Name="titheDate" Type="DateTime" Precision="0" />
+          <Property Name="titheAmount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="titheComment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idService" Type="Int32" Nullable="false" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.Tithes_fk_Tithes_Person1" FromRole="Tithes" ToRole="Person" />
+        </EntityType>
         <Association Name="Families_fk_Families_Address1">
           <End Role="Address" Type="Self.Address" Multiplicity="1" />
           <End Role="Families" Type="Self.Family" Multiplicity="*" />
@@ -947,30 +1100,6 @@
             </Principal>
             <Dependent Role="MedicalInfo">
               <PropertyRef Name="idbloodType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Campus_fk_Campus_Campus1">
-          <End Role="Campus" Type="Self.Campu" Multiplicity="0..1" />
-          <End Role="Campus1" Type="Self.Campu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Campus">
-              <PropertyRef Name="idCampus" />
-            </Principal>
-            <Dependent Role="Campus1">
-              <PropertyRef Name="parentCampus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Campus_fk_Campus_Country1">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Campus" Type="Self.Campu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="idCountry" />
-            </Principal>
-            <Dependent Role="Campus">
-              <PropertyRef Name="idCountry" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1022,6 +1151,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Documents_fk_Documents_DocumentType1">
+          <End Role="DocumentType" Type="Self.DocumentType" Multiplicity="1" />
+          <End Role="Documents" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentType">
+              <PropertyRef Name="idDocumentType" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="idDocumentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DocumentsTag_fk_Documents_has_Tag_Documents1">
+          <End Role="Documents" Type="Self.Document" Multiplicity="1" />
+          <End Role="DocumentsTag" Type="Self.DocumentsTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documents">
+              <PropertyRef Name="idDocuments" />
+            </Principal>
+            <Dependent Role="DocumentsTag">
+              <PropertyRef Name="idDocuments" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="EmploymentHistory_fk_EmploymentHistory_Person1">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
           <End Role="EmploymentHistory" Type="Self.EmploymentHistory" Multiplicity="*" />
@@ -1058,30 +1211,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Person_fk_Person_FamilyRole1">
-          <End Role="FamilyRole" Type="Self.FamilyRole" Multiplicity="0..1" />
-          <End Role="Person" Type="Self.Person" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FamilyRole">
-              <PropertyRef Name="idFamilyRole" />
-            </Principal>
-            <Dependent Role="Person">
-              <PropertyRef Name="idFamilyRole" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Profession_fk_profession_Industry1">
-          <End Role="Industry" Type="Self.Industry" Multiplicity="1" />
-          <End Role="Profession" Type="Self.Profession" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Industry">
-              <PropertyRef Name="idIndustry" />
-            </Principal>
-            <Dependent Role="Profession">
-              <PropertyRef Name="idIndustry" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="MaritalStatus_fk_MaritalStatus_MaritalStatusType1">
           <End Role="MaritalStatusType" Type="Self.MaritalStatusType" Multiplicity="1" />
           <End Role="MaritalStatus" Type="Self.MaritalStatu" Multiplicity="*" />
@@ -1115,6 +1244,18 @@
             </Principal>
             <Dependent Role="Person">
               <PropertyRef Name="idMedicalInfo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Notes_fk_Notes_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Notes" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="idPerson" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1166,6 +1307,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Tithes_fk_Tithes_Person1">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Tithes" Type="Self.Tithe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="Tithes">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="StudyLevel_fk_StudyLevel_StudyLevelType1">
           <End Role="StudyLevelType" Type="Self.StudyLevelType" Multiplicity="1" />
           <End Role="StudyLevel" Type="Self.StudyLevel" Multiplicity="*" />
@@ -1178,31 +1331,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="leVillageEntities" annotation:LazyLoadingEnabled="true">
+        <Association Name="DocumentsPerson">
+          <End Role="Documents" Type="Self.Document" Multiplicity="*" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="leVillageEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="BloodTypes" EntityType="Self.BloodType" />
           <EntitySet Name="Campus" EntityType="Self.Campu" />
           <EntitySet Name="CheckListCategories" EntityType="Self.CheckListCategory" />
           <EntitySet Name="ChurchHistories" EntityType="Self.ChurchHistory" />
-          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Documents" EntityType="Self.Document" />
+          <EntitySet Name="DocumentsTags" EntityType="Self.DocumentsTag" />
+          <EntitySet Name="DocumentTypes" EntityType="Self.DocumentType" />
           <EntitySet Name="EmploymentHistories" EntityType="Self.EmploymentHistory" />
           <EntitySet Name="EntryPoints" EntityType="Self.EntryPoint" />
           <EntitySet Name="Families" EntityType="Self.Family" />
-          <EntitySet Name="FamilyRoles" EntityType="Self.FamilyRole" />
-          <EntitySet Name="Industries" EntityType="Self.Industry" />
           <EntitySet Name="MaritalStatus" EntityType="Self.MaritalStatu" />
           <EntitySet Name="MaritalStatusTypes" EntityType="Self.MaritalStatusType" />
           <EntitySet Name="MedicalInfoes" EntityType="Self.MedicalInfo" />
+          <EntitySet Name="Notes" EntityType="Self.Note" />
           <EntitySet Name="People" EntityType="Self.Person" />
           <EntitySet Name="PersonPhotos" EntityType="Self.PersonPhoto" />
           <EntitySet Name="Professions" EntityType="Self.Profession" />
           <EntitySet Name="StatusHistories" EntityType="Self.StatusHistory" />
           <EntitySet Name="StudyLevels" EntityType="Self.StudyLevel" />
           <EntitySet Name="StudyLevelTypes" EntityType="Self.StudyLevelType" />
-          <AssociationSet Name="Address_fk_Address_Country1" Association="Self.Address_fk_Address_Country1">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Address" EntitySet="Addresses" />
-          </AssociationSet>
+          <EntitySet Name="Tithes" EntityType="Self.Tithe" />
           <AssociationSet Name="Families_fk_Families_Address1" Association="Self.Families_fk_Families_Address1">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="Families" EntitySet="Families" />
@@ -1214,14 +1369,6 @@
           <AssociationSet Name="MedicalInfo_fk_MedicalInfo_BloodType1" Association="Self.MedicalInfo_fk_MedicalInfo_BloodType1">
             <End Role="BloodType" EntitySet="BloodTypes" />
             <End Role="MedicalInfo" EntitySet="MedicalInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="Campus_fk_Campus_Campus1" Association="Self.Campus_fk_Campus_Campus1">
-            <End Role="Campus" EntitySet="Campus" />
-            <End Role="Campus1" EntitySet="Campus" />
-          </AssociationSet>
-          <AssociationSet Name="Campus_fk_Campus_Country1" Association="Self.Campus_fk_Campus_Country1">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Campus" EntitySet="Campus" />
           </AssociationSet>
           <AssociationSet Name="Person_fk_Person_Campus1" Association="Self.Person_fk_Person_Campus1">
             <End Role="Campus" EntitySet="Campus" />
@@ -1239,6 +1386,14 @@
             <End Role="Person" EntitySet="People" />
             <End Role="ChurchHistory" EntitySet="ChurchHistories" />
           </AssociationSet>
+          <AssociationSet Name="Documents_fk_Documents_DocumentType1" Association="Self.Documents_fk_Documents_DocumentType1">
+            <End Role="DocumentType" EntitySet="DocumentTypes" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="DocumentsTag_fk_Documents_has_Tag_Documents1" Association="Self.DocumentsTag_fk_Documents_has_Tag_Documents1">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="DocumentsTag" EntitySet="DocumentsTags" />
+          </AssociationSet>
           <AssociationSet Name="EmploymentHistory_fk_EmploymentHistory_Person1" Association="Self.EmploymentHistory_fk_EmploymentHistory_Person1">
             <End Role="Person" EntitySet="People" />
             <End Role="EmploymentHistory" EntitySet="EmploymentHistories" />
@@ -1251,14 +1406,6 @@
             <End Role="Families" EntitySet="Families" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
-          <AssociationSet Name="Person_fk_Person_FamilyRole1" Association="Self.Person_fk_Person_FamilyRole1">
-            <End Role="FamilyRole" EntitySet="FamilyRoles" />
-            <End Role="Person" EntitySet="People" />
-          </AssociationSet>
-          <AssociationSet Name="Profession_fk_profession_Industry1" Association="Self.Profession_fk_profession_Industry1">
-            <End Role="Industry" EntitySet="Industries" />
-            <End Role="Profession" EntitySet="Professions" />
-          </AssociationSet>
           <AssociationSet Name="MaritalStatus_fk_MaritalStatus_MaritalStatusType1" Association="Self.MaritalStatus_fk_MaritalStatus_MaritalStatusType1">
             <End Role="MaritalStatusType" EntitySet="MaritalStatusTypes" />
             <End Role="MaritalStatus" EntitySet="MaritalStatus" />
@@ -1270,6 +1417,10 @@
           <AssociationSet Name="Person_fk_Person_MedicalInfo1" Association="Self.Person_fk_Person_MedicalInfo1">
             <End Role="MedicalInfo" EntitySet="MedicalInfoes" />
             <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Notes_fk_Notes_Person1" Association="Self.Notes_fk_Notes_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Notes" EntitySet="Notes" />
           </AssociationSet>
           <AssociationSet Name="Person_fk_Person_profession1" Association="Self.Person_fk_Person_profession1">
             <End Role="Profession" EntitySet="Professions" />
@@ -1287,17 +1438,146 @@
             <End Role="Person" EntitySet="People" />
             <End Role="StudyLevel" EntitySet="StudyLevels" />
           </AssociationSet>
+          <AssociationSet Name="Tithes_fk_Tithes_Person1" Association="Self.Tithes_fk_Tithes_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Tithes" EntitySet="Tithes" />
+          </AssociationSet>
           <AssociationSet Name="StudyLevel_fk_StudyLevel_StudyLevelType1" Association="Self.StudyLevel_fk_StudyLevel_StudyLevelType1">
             <End Role="StudyLevelType" EntitySet="StudyLevelTypes" />
             <End Role="StudyLevel" EntitySet="StudyLevels" />
           </AssociationSet>
+          <AssociationSet Name="DocumentsPerson" Association="Self.DocumentsPerson">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="leVillageModel.Country" />
+          <EntitySet Name="Currencies" EntityType="leVillageModel.Currency" />
+          <EntitySet Name="Industries" EntityType="leVillageModel.Industry" />
+          <AssociationSet Name="Address_fk_Address_Country1" Association="leVillageModel.Address_fk_Address_Country1">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="Campus_fk_Campus_Country1" Association="leVillageModel.Campus_fk_Campus_Country1">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Campu" EntitySet="Campus" />
+          </AssociationSet>
+          <AssociationSet Name="Profession_fk_profession_Industry1" Association="leVillageModel.Profession_fk_profession_Industry1">
+            <End Role="Industry" EntitySet="Industries" />
+            <End Role="Profession" EntitySet="Professions" />
+          </AssociationSet>
+          <EntitySet Name="FamilyRoles" EntityType="leVillageModel.FamilyRole" />
+          <AssociationSet Name="Person_fk_Person_FamilyRole1" Association="leVillageModel.Person_fk_Person_FamilyRole1">
+            <End Role="FamilyRole" EntitySet="FamilyRoles" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="idCountry" />
+          </Key>
+          <Property Name="idCountry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iso_alpha2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="iso_alpha3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="iso_numeric" Type="Int32" />
+          <Property Name="fips_code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="capital" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="areainsqkm" Type="Double" />
+          <Property Name="population" Type="Int32" />
+          <Property Name="continent" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="tld" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="currency" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="currencyName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="postalCodeFormat" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="postalCodeRegex" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="geonameId" Type="Int32" />
+          <Property Name="languages" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="neighbours" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="equivalentFipsCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Addresses" Relationship="leVillageModel.Address_fk_Address_Country1" FromRole="Country" ToRole="Address" />
+          <NavigationProperty Name="Campus" Relationship="leVillageModel.Campus_fk_Campus_Country1" FromRole="Country" ToRole="Campu" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="idCurrency" />
+          </Key>
+          <Property Name="idCurrency" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="currencyCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="currencyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="currencyImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Industry">
+          <Key>
+            <PropertyRef Name="idIndustry" />
+          </Key>
+          <Property Name="idIndustry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="industryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Professions" Relationship="leVillageModel.Profession_fk_profession_Industry1" FromRole="Industry" ToRole="Profession" />
+        </EntityType>
+        <Association Name="Address_fk_Address_Country1">
+          <End Type="leVillageModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="leVillageModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="idCountry" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="idCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Campus_fk_Campus_Country1">
+          <End Type="leVillageModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="leVillageModel.Campu" Role="Campu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="idCountry" />
+            </Principal>
+            <Dependent Role="Campu">
+              <PropertyRef Name="idCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Profession_fk_profession_Industry1">
+          <End Type="leVillageModel.Industry" Role="Industry" Multiplicity="1" />
+          <End Type="leVillageModel.Profession" Role="Profession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Industry">
+              <PropertyRef Name="idIndustry" />
+            </Principal>
+            <Dependent Role="Profession">
+              <PropertyRef Name="idIndustry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FamilyRole">
+          <Key>
+            <PropertyRef Name="idFamilyRole" />
+          </Key>
+          <Property Name="idFamilyRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="familyRoleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="familyRoleCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="leVillageModel.Person_fk_Person_FamilyRole1" FromRole="FamilyRole" ToRole="Person" />
+        </EntityType>
+        <Association Name="Person_fk_Person_FamilyRole1">
+          <End Type="leVillageModel.FamilyRole" Role="FamilyRole" Multiplicity="0..1" />
+          <End Type="leVillageModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FamilyRole">
+              <PropertyRef Name="idFamilyRole" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="idFamilyRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="leVillageModelStoreContainer" CdmEntityContainer="leVillageEntities">
+        <EntityContainerMapping StorageEntityContainer="leVillageModelStoreContainer" CdmEntityContainer="leVillageEntities1">
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="leVillageModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -1327,7 +1607,6 @@
                 <ScalarProperty Name="campusCity" ColumnName="campusCity" />
                 <ScalarProperty Name="campusPostalCode" ColumnName="campusPostalCode" />
                 <ScalarProperty Name="idCountry" ColumnName="idCountry" />
-                <ScalarProperty Name="parentCampus" ColumnName="parentCampus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1352,29 +1631,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="leVillageModel.Country">
-              <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="idCountry" ColumnName="idCountry" />
-                <ScalarProperty Name="iso_alpha2" ColumnName="iso_alpha2" />
-                <ScalarProperty Name="iso_alpha3" ColumnName="iso_alpha3" />
-                <ScalarProperty Name="iso_numeric" ColumnName="iso_numeric" />
-                <ScalarProperty Name="fips_code" ColumnName="fips_code" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="capital" ColumnName="capital" />
-                <ScalarProperty Name="areainsqkm" ColumnName="areainsqkm" />
-                <ScalarProperty Name="population" ColumnName="population" />
-                <ScalarProperty Name="continent" ColumnName="continent" />
-                <ScalarProperty Name="tld" ColumnName="tld" />
-                <ScalarProperty Name="currency" ColumnName="currency" />
-                <ScalarProperty Name="currencyName" ColumnName="currencyName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="postalCodeFormat" ColumnName="postalCodeFormat" />
-                <ScalarProperty Name="postalCodeRegex" ColumnName="postalCodeRegex" />
-                <ScalarProperty Name="geonameId" ColumnName="geonameId" />
-                <ScalarProperty Name="languages" ColumnName="languages" />
-                <ScalarProperty Name="neighbours" ColumnName="neighbours" />
-                <ScalarProperty Name="equivalentFipsCode" ColumnName="equivalentFipsCode" />
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="leVillageModel.Document">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="idDocuments" ColumnName="idDocuments" />
+                <ScalarProperty Name="documentsName" ColumnName="documentsName" />
+                <ScalarProperty Name="documentsPath" ColumnName="documentsPath" />
+                <ScalarProperty Name="accessCount" ColumnName="accessCount" />
+                <ScalarProperty Name="documentsDetails" ColumnName="documentsDetails" />
+                <ScalarProperty Name="dateUploaded" ColumnName="dateUploaded" />
+                <ScalarProperty Name="uploadedBy" ColumnName="uploadedBy" />
+                <ScalarProperty Name="idDocumentType" ColumnName="idDocumentType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentsTags">
+            <EntityTypeMapping TypeName="leVillageModel.DocumentsTag">
+              <MappingFragment StoreEntitySet="DocumentsTag">
+                <ScalarProperty Name="idDocuments" ColumnName="idDocuments" />
+                <ScalarProperty Name="idTag" ColumnName="idTag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentTypes">
+            <EntityTypeMapping TypeName="leVillageModel.DocumentType">
+              <MappingFragment StoreEntitySet="DocumentType">
+                <ScalarProperty Name="idDocumentType" ColumnName="idDocumentType" />
+                <ScalarProperty Name="documentTypeName" ColumnName="documentTypeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1410,23 +1693,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FamilyRoles">
-            <EntityTypeMapping TypeName="leVillageModel.FamilyRole">
-              <MappingFragment StoreEntitySet="FamilyRole">
-                <ScalarProperty Name="idFamilyRole" ColumnName="idFamilyRole" />
-                <ScalarProperty Name="familyRoleName" ColumnName="familyRoleName" />
-                <ScalarProperty Name="familyRoleCode" ColumnName="familyRoleCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Industries">
-            <EntityTypeMapping TypeName="leVillageModel.Industry">
-              <MappingFragment StoreEntitySet="Industry">
-                <ScalarProperty Name="idIndustry" ColumnName="idIndustry" />
-                <ScalarProperty Name="industryName" ColumnName="industryName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MaritalStatus">
             <EntityTypeMapping TypeName="leVillageModel.MaritalStatu">
               <MappingFragment StoreEntitySet="MaritalStatus">
@@ -1450,9 +1716,9 @@
             <EntityTypeMapping TypeName="leVillageModel.MedicalInfo">
               <MappingFragment StoreEntitySet="MedicalInfo">
                 <ScalarProperty Name="idMedicalInfo" ColumnName="idMedicalInfo" />
-                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
-                <ScalarProperty Name="DoctorPhone" ColumnName="DoctorPhone" />
-                <ScalarProperty Name="DoctorEmail" ColumnName="DoctorEmail" />
+                <ScalarProperty Name="doctorName" ColumnName="doctorName" />
+                <ScalarProperty Name="doctorPhone" ColumnName="doctorPhone" />
+                <ScalarProperty Name="doctorEmail" ColumnName="doctorEmail" />
                 <ScalarProperty Name="idbloodType" ColumnName="idbloodType" />
                 <ScalarProperty Name="height" ColumnName="height" />
                 <ScalarProperty Name="allergies" ColumnName="allergies" />
@@ -1460,6 +1726,20 @@
                 <ScalarProperty Name="medicines" ColumnName="medicines" />
                 <ScalarProperty Name="vaccines" ColumnName="vaccines" />
                 <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="leVillageModel.Note">
+              <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="idNotes" ColumnName="idNotes" />
+                <ScalarProperty Name="notesDescription" ColumnName="notesDescription" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="modifiedDate" ColumnName="modifiedDate" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="modifiedBy" ColumnName="modifiedBy" />
+                <ScalarProperty Name="idNoteType" ColumnName="idNoteType" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1479,8 +1759,6 @@
                 <ScalarProperty Name="isBaptized" ColumnName="isBaptized" />
                 <ScalarProperty Name="dateBaptism" ColumnName="dateBaptism" />
                 <ScalarProperty Name="idprofession" ColumnName="idprofession" />
-                <ScalarProperty Name="personalTestimony" ColumnName="personalTestimony" />
-                <ScalarProperty Name="personalTestimonyDoc" ColumnName="personalTestimonyDoc" />
                 <ScalarProperty Name="idAddress" ColumnName="idAddress" />
                 <ScalarProperty Name="isMember" ColumnName="isMember" />
                 <ScalarProperty Name="dateMembership" ColumnName="dateMembership" />
@@ -1542,6 +1820,79 @@
               <MappingFragment StoreEntitySet="StudyLevelType">
                 <ScalarProperty Name="idStudyLevelType" ColumnName="idStudyLevelType" />
                 <ScalarProperty Name="nameStudyLevelType" ColumnName="nameStudyLevelType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tithes">
+            <EntityTypeMapping TypeName="leVillageModel.Tithe">
+              <MappingFragment StoreEntitySet="Tithes">
+                <ScalarProperty Name="idTithes" ColumnName="idTithes" />
+                <ScalarProperty Name="titheDate" ColumnName="titheDate" />
+                <ScalarProperty Name="titheAmount" ColumnName="titheAmount" />
+                <ScalarProperty Name="titheComment" ColumnName="titheComment" />
+                <ScalarProperty Name="idService" ColumnName="idService" />
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DocumentsPerson" TypeName="leVillageModel.DocumentsPerson" StoreEntitySet="DocumentsPerson">
+            <EndProperty Name="Documents">
+              <ScalarProperty Name="idDocuments" ColumnName="idDocuments" />
+            </EndProperty>
+            <EndProperty Name="Person">
+              <ScalarProperty Name="idPerson" ColumnName="idPerson" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="leVillageModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="equivalentFipsCode" ColumnName="equivalentFipsCode" />
+                <ScalarProperty Name="neighbours" ColumnName="neighbours" />
+                <ScalarProperty Name="languages" ColumnName="languages" />
+                <ScalarProperty Name="geonameId" ColumnName="geonameId" />
+                <ScalarProperty Name="postalCodeRegex" ColumnName="postalCodeRegex" />
+                <ScalarProperty Name="postalCodeFormat" ColumnName="postalCodeFormat" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="currencyName" ColumnName="currencyName" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="tld" ColumnName="tld" />
+                <ScalarProperty Name="continent" ColumnName="continent" />
+                <ScalarProperty Name="population" ColumnName="population" />
+                <ScalarProperty Name="areainsqkm" ColumnName="areainsqkm" />
+                <ScalarProperty Name="capital" ColumnName="capital" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="fips_code" ColumnName="fips_code" />
+                <ScalarProperty Name="iso_numeric" ColumnName="iso_numeric" />
+                <ScalarProperty Name="iso_alpha3" ColumnName="iso_alpha3" />
+                <ScalarProperty Name="iso_alpha2" ColumnName="iso_alpha2" />
+                <ScalarProperty Name="idCountry" ColumnName="idCountry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="leVillageModel.Currency">
+              <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="currencyImage" ColumnName="currencyImage" />
+                <ScalarProperty Name="currencyName" ColumnName="currencyName" />
+                <ScalarProperty Name="currencyCode" ColumnName="currencyCode" />
+                <ScalarProperty Name="idCurrency" ColumnName="idCurrency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Industries">
+            <EntityTypeMapping TypeName="leVillageModel.Industry">
+              <MappingFragment StoreEntitySet="Industry">
+                <ScalarProperty Name="industryName" ColumnName="industryName" />
+                <ScalarProperty Name="idIndustry" ColumnName="idIndustry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FamilyRoles">
+            <EntityTypeMapping TypeName="leVillageModel.FamilyRole">
+              <MappingFragment StoreEntitySet="FamilyRole">
+                <ScalarProperty Name="familyRoleCode" ColumnName="familyRoleCode" />
+                <ScalarProperty Name="familyRoleName" ColumnName="familyRoleName" />
+                <ScalarProperty Name="idFamilyRole" ColumnName="idFamilyRole" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

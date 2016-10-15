@@ -20,9 +20,12 @@ namespace WebApplication1
             this.ChurchHistories = new HashSet<ChurchHistory>();
             this.EmploymentHistories = new HashSet<EmploymentHistory>();
             this.MaritalStatus = new HashSet<MaritalStatu>();
+            this.Notes = new HashSet<Note>();
             this.PersonPhotos = new HashSet<PersonPhoto>();
             this.StatusHistories = new HashSet<StatusHistory>();
             this.StudyLevels = new HashSet<StudyLevel>();
+            this.Tithes = new HashSet<Tithe>();
+            this.Documents = new HashSet<Document>();
         }
     
         public int idPerson { get; set; }
@@ -38,8 +41,6 @@ namespace WebApplication1
         public Nullable<short> isBaptized { get; set; }
         public Nullable<System.DateTime> dateBaptism { get; set; }
         public Nullable<int> idprofession { get; set; }
-        public string personalTestimony { get; set; }
-        public byte[] personalTestimonyDoc { get; set; }
         public Nullable<int> idAddress { get; set; }
         public Nullable<short> isMember { get; set; }
         public Nullable<System.DateTime> dateMembership { get; set; }
@@ -59,10 +60,11 @@ namespace WebApplication1
         public virtual ICollection<EmploymentHistory> EmploymentHistories { get; set; }
         public virtual EntryPoint EntryPoint { get; set; }
         public virtual Family Family { get; set; }
-        public virtual FamilyRole FamilyRole { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaritalStatu> MaritalStatus { get; set; }
         public virtual MedicalInfo MedicalInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Note> Notes { get; set; }
         public virtual Profession Profession { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonPhoto> PersonPhotos { get; set; }
@@ -70,5 +72,10 @@ namespace WebApplication1
         public virtual ICollection<StatusHistory> StatusHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudyLevel> StudyLevels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tithe> Tithes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Document> Documents { get; set; }
+        public virtual FamilyRole FamilyRole { get; set; }
     }
 }

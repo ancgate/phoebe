@@ -4,50 +4,60 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dad2e247a6ce462fae396547dd1ae2d6" Name="Diagram1">
-        <EntityTypeShape EntityType="leVillageModel.Address" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.BloodType" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Campu" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.CheckListCategory" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.ChurchHistory" Width="1.5" PointX="9.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Country" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.EmploymentHistory" Width="1.5" PointX="9.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.EntryPoint" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Family" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.FamilyRole" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Industry" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.MaritalStatu" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.MaritalStatusType" Width="1.5" PointX="10.5" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.MedicalInfo" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Person" Width="1.5" PointX="7.5" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.PersonPhoto" Width="1.5" PointX="9.375" PointY="20.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Profession" Width="1.5" PointX="5.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.StatusHistory" Width="1.5" PointX="12.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.StudyLevel" Width="1.5" PointX="12.75" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.StudyLevelType" Width="1.5" PointX="10.5" PointY="23.125" IsExpanded="true" />
-        <AssociationConnector Association="leVillageModel.Address_fk_Address_Country1" ManuallyRouted="false" />
+      <Diagram DiagramId="da90ce8d4b144e73b8294560ef70ac7b" Name="Diagram1">
+        <EntityTypeShape EntityType="leVillageModel.Address" Width="1.5" PointX="0.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.BloodType" Width="1.5" PointX="0.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Campu" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.CheckListCategory" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.ChurchHistory" Width="1.5" PointX="10.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Document" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.DocumentsTag" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.DocumentType" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.EmploymentHistory" Width="1.5" PointX="7.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.EntryPoint" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Family" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.MaritalStatu" Width="1.5" PointX="10.5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.MaritalStatusType" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.MedicalInfo" Width="1.5" PointX="3" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Note" Width="1.5" PointX="7.5" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Person" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.PersonPhoto" Width="1.5" PointX="7.5" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Profession" Width="1.5" PointX="3.5" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.StatusHistory" Width="1.5" PointX="10.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.StudyLevel" Width="1.5" PointX="7.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.StudyLevelType" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Tithe" Width="1.5" PointX="6.875" PointY="26.375" IsExpanded="true" />
         <AssociationConnector Association="leVillageModel.Families_fk_Families_Address1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_Address1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.MedicalInfo_fk_MedicalInfo_BloodType1" ManuallyRouted="false" />
-        <AssociationConnector Association="leVillageModel.Campus_fk_Campus_Campus1" ManuallyRouted="false" />
-        <AssociationConnector Association="leVillageModel.Campus_fk_Campus_Country1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_Campus1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.ChurchHistory_fk_ChurchHistory_CheckListCategory1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.StatusHistory_fk_StatusHistory_CheckListCategory1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.ChurchHistory_fk_ChurchHistory_Person1" ManuallyRouted="false" />
+        <AssociationConnector Association="leVillageModel.Documents_fk_Documents_DocumentType1" ManuallyRouted="false" />
+        <AssociationConnector Association="leVillageModel.DocumentsTag_fk_Documents_has_Tag_Documents1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.EmploymentHistory_fk_EmploymentHistory_Person1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_EntryPoint1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_Families1" ManuallyRouted="false" />
-        <AssociationConnector Association="leVillageModel.Person_fk_Person_FamilyRole1" ManuallyRouted="false" />
-        <AssociationConnector Association="leVillageModel.Profession_fk_profession_Industry1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.MaritalStatus_fk_MaritalStatus_MaritalStatusType1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.MaritalStatus_fk_MaritalStatus_Person1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_MedicalInfo1" ManuallyRouted="false" />
+        <AssociationConnector Association="leVillageModel.Notes_fk_Notes_Person1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_profession1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.PersonPhotos_fk_PersonPhotos_Person1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.StatusHistory_fk_StatusHistory_Person1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.StudyLevel_fk_StudyLevel_Person1" ManuallyRouted="false" />
+        <AssociationConnector Association="leVillageModel.Tithes_fk_Tithes_Person1" ManuallyRouted="false" />
         <AssociationConnector Association="leVillageModel.StudyLevel_fk_StudyLevel_StudyLevelType1" ManuallyRouted="false" />
+        <AssociationConnector Association="leVillageModel.DocumentsPerson" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="leVillageModel.Country" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="leVillageModel.Currency" Width="1.5" PointX="5.25" PointY="0.875" />
+        <EntityTypeShape EntityType="leVillageModel.Industry" Width="1.5" PointX="1.375" PointY="21.625" />
+        <AssociationConnector Association="leVillageModel.Address_fk_Address_Country1" />
+        <AssociationConnector Association="leVillageModel.Campus_fk_Campus_Country1" />
+        <AssociationConnector Association="leVillageModel.Profession_fk_profession_Industry1" />
+        <EntityTypeShape EntityType="leVillageModel.FamilyRole" Width="1.5" PointX="10.375" PointY="0.875" />
+        <AssociationConnector Association="leVillageModel.Person_fk_Person_FamilyRole1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

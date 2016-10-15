@@ -21,9 +21,9 @@ namespace WebApplication1
         }
     
         public int idMedicalInfo { get; set; }
-        public string DoctorName { get; set; }
-        public string DoctorPhone { get; set; }
-        public string DoctorEmail { get; set; }
+        public string doctorName { get; set; }
+        public string doctorPhone { get; set; }
+        public string doctorEmail { get; set; }
         public int idbloodType { get; set; }
         public string height { get; set; }
         public string allergies { get; set; }

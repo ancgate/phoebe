@@ -28,10 +28,10 @@ namespace WebApplication1
         public string postalCode { get; set; }
         public int idCountry { get; set; }
     
-        public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Family> Families { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> People { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

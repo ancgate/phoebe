@@ -12,20 +12,28 @@ namespace WebApplication1
     using System;
     using System.Collections.Generic;
     
-    public partial class Profession
+    public partial class Document
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Profession()
+        public Document()
         {
+            this.DocumentsTags = new HashSet<DocumentsTag>();
             this.People = new HashSet<Person>();
         }
     
-        public int idprofession { get; set; }
-        public string professionName { get; set; }
-        public int idIndustry { get; set; }
+        public int idDocuments { get; set; }
+        public string documentsName { get; set; }
+        public string documentsPath { get; set; }
+        public Nullable<int> accessCount { get; set; }
+        public string documentsDetails { get; set; }
+        public Nullable<System.DateTime> dateUploaded { get; set; }
+        public string uploadedBy { get; set; }
+        public int idDocumentType { get; set; }
     
+        public virtual DocumentType DocumentType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentsTag> DocumentsTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> People { get; set; }
-        public virtual Industry Industry { get; set; }
     }
 }

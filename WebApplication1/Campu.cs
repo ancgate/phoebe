@@ -17,7 +17,6 @@ namespace WebApplication1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Campu()
         {
-            this.Campus1 = new HashSet<Campu>();
             this.People = new HashSet<Person>();
         }
     
@@ -27,13 +26,9 @@ namespace WebApplication1
         public string campusCity { get; set; }
         public string campusPostalCode { get; set; }
         public int idCountry { get; set; }
-        public Nullable<int> parentCampus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Campu> Campus1 { get; set; }
-        public virtual Campu Campu1 { get; set; }
-        public virtual Country Country { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> People { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

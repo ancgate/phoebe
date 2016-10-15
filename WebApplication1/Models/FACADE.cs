@@ -7,12 +7,18 @@ namespace WebApplication1.Models
 {
     public class FACADE
     {
+        private leVillageEntities1 lve;
 
-        static void crud() {
+        public FACADE(leVillageEntities1 _lve) {
+            lve = _lve;
+        }
+
+        public void crud()
+        {
 
 
             //Adding Industries
-            leVillageEntities lve = new leVillageEntities();
+            
             Industry industry = new Industry();
             industry.industryName = "";
             lve.Industries.Add(industry);
@@ -58,7 +64,7 @@ namespace WebApplication1.Models
             campus.campusCity = "";
             campus.campusPostalCode = "";
             campus.parentCampus = 1;
-            campus.idCountry=1;
+            campus.idCountry = 1;
             lve.Campus.Add(campus);
             lve.SaveChanges();
 
@@ -79,7 +85,8 @@ namespace WebApplication1.Models
 
             var campusesName = lve.Campus.Where(x => x.campusName == "Delmas").FirstOrDefault();
 
-            if (campusesName != null) {
+            if (campusesName != null)
+            {
 
                 campusesName.campusName = "";
                 lve.SaveChanges();
@@ -97,10 +104,10 @@ namespace WebApplication1.Models
 
         }
 
+        public void addPerson()
+        {
 
-        public void addPerson() {
-
-            leVillageEntities lve = new leVillageEntities();
+            
             Person person = new Person();
             person.firstName = "Paul";
             person.lastName = "Murphy";
@@ -114,33 +121,49 @@ namespace WebApplication1.Models
             person.isBaptized = 0;
             person.dateBaptism = new DateTime(); //if the person is not baptized, don't put any date
             person.Profession = new Profession() { professionName = "Financial Engineer", idIndustry = 1 };
-            person.personalTestimony = "Personnal Testimony";
-            person.personalTestimonyDoc = new Byte();
-            person.Address = new Address() { street = "streetName", city="CityName", state="Departement", postalCode="HT6120", idCountry=1 };
+            person.Address = new Address() { street = "streetName", city = "CityName", state = "Departement", postalCode = "HT6120", idCountry = 1 };
             person.isMember = 0;
             person.dateMembership = new DateTime(); //if the person is not a member, don't put any date
             person.EntryPoint = new EntryPoint() { entryPointName = "Service", locationEntryPoint = "La Gonave" };
             person.dateWedding = new DateTime(); // if the person is not married, don't put any date
-            person.FamilyRole = new FamilyRole() { familyRoleName = "Father", familyRoleCode="FATHER" };
-            person.Family = new Family() { FamilyName= person.lastName, idAddress= person.Address.idAddress };
+            person.FamilyRole = new FamilyRole() { familyRoleName = "Father", familyRoleCode = "FATHER" };
+            person.Family = new Family() { FamilyName = person.lastName, idAddress = person.Address.idAddress };
             person.isDeceased = 0; // when entering the person, the person should not be deceased, if deceased give another interface
-            person.Campu = new Campu() { campusName = "", campusStreet = "", campusCity = "", campusPostalCode = "", parentCampus = 1, idCountry = 1};
-            person.MedicalInfo = new MedicalInfo() { DoctorName = "", DoctorPhone = "", DoctorEmail= "", idbloodType = 1, height = "5.6", allergies = "", pathologies="", medicines= "", vaccines="", comments="" };
+            person.Campu = new Campu() { campusName = "", campusStreet = "", campusCity = "", campusPostalCode = "", idCountry = 1 };
+            person.MedicalInfo = new MedicalInfo() { doctorName = "", doctorPhone = "", doctorEmail = "", idbloodType = 1, height = "5.6", allergies = "", pathologies = "", medicines = "", vaccines = "", comments = "" };
             lve.People.Add(person);
             lve.SaveChanges();
         }
 
-
-        public String generateMemberIdentificationNumber() {
-
+        public String generateMemberIdentificationNumber()
+        {
 
             return "";
+        }
+
+        public int? lastAccessCountDocument()
+        {
+
+
+            int? count;
+
+            
+
+            var document = lve.Documents.Where(x => x.documentsName == "Delmas").FirstOrDefault();
+
+            if (document != null)
+            {
+                count = document.accessCount;
+            }
+
+            return count;
+
         }
 
         public void addPersonStatusHistory(Person person)
         {
 
-            leVillageEntities lve = new leVillageEntities();
+            
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
@@ -153,16 +176,16 @@ namespace WebApplication1.Models
                 statusHistory.effectiveDate = new DateTime();
                 statusHistory.statusAtChurch = 1;                    //new CheckListCategory() { idcheckListCategory = 1, namecheckListCategory = "Papa", isMemberStatus = 1 };
                 statusHistory.Person = person;
-
+                lve.StatusHistories.Add(statusHistory);
                 lve.SaveChanges();
 
             }
         }
 
+        public void addPersonEmployementHistory(Person person)
+        {
 
-        public void addPersonEmployementHistory(Person person) {
-
-            leVillageEntities lve = new leVillageEntities();
+            
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
@@ -175,54 +198,88 @@ namespace WebApplication1.Models
                 employmentHistory.toDate = new DateTime();
                 employmentHistory.position = "CEO";
                 employmentHistory.Person = person;
+                lve.EmploymentHistories.Add(employmentHistory);
                 lve.SaveChanges();
 
             }
-            }
+        }
 
+        public void addPersonStudyLevel(Person person)
+        {
 
-
-        public void addPersonStudyLevel(Person person) {
-
-            leVillageEntities lve = new leVillageEntities();
+            
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
             if (people != null)
             {
                 StudyLevel studyLevel = new StudyLevel();
-                studyLevel.StudyLevelType = new StudyLevelType() { idStudyLevelType=1, nameStudyLevelType = "School" };
+                studyLevel.StudyLevelType = new StudyLevelType() { idStudyLevelType = 1, nameStudyLevelType = "School" };
                 studyLevel.nameSchoolOrUniversity = "";
                 studyLevel.fromDate = new DateTime();
                 studyLevel.toDate = new DateTime();
                 studyLevel.Person = person;
+                lve.StudyLevels.Add(studyLevel);
                 lve.SaveChanges();
             }
 
         }
 
+        public void addPersonMaritalStatus(Person person)
+        {
 
-        public void addPersonMaritalStatus(Person person) {
-
-            leVillageEntities lve = new leVillageEntities();
+            
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
             if (people != null)
             {
                 MaritalStatu maritalstatus = new MaritalStatu();
-                maritalstatus.MaritalStatusType = new MaritalStatusType() { idMaritalStatusType=1, nameMaritalStatusType="Married" };
+                maritalstatus.MaritalStatusType = new MaritalStatusType() { idMaritalStatusType = 1, nameMaritalStatusType = "Married" };
                 maritalstatus.startDate = new DateTime();
                 maritalstatus.endDate = new DateTime();
                 maritalstatus.Person = person;
+                lve.MaritalStatus.Add(maritalstatus);
                 lve.SaveChanges();
             }
         }
 
+        public void addPersonAddresses(Person person)
+        {
 
-        public void addPersonPhotos(Person person) {
+            
 
-            leVillageEntities lve = new leVillageEntities();
+            Address address = new Address();
+            address.street = "";
+            address.city = "";
+            address.state = "";
+            address.postalCode = "";
+            address.idCountry = 1;
+            address.People.Add(person);
+            lve.Addresses.Add(address);
+            lve.SaveChanges();
+
+        }
+
+        public void addPersonToFamily(Person person)
+        {
+
+            
+
+            Family family = new Family();
+            family.FamilyName = person.lastName;
+            family.Address = person.Address;
+            family.phone = person.phone;
+            family.picture = new Byte();
+            lve.Families.Add(family);
+            lve.SaveChanges();
+
+        }
+
+        public void addPersonPhotos(Person person)
+        {
+
+            
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
@@ -232,30 +289,91 @@ namespace WebApplication1.Models
                 personPhoto.photoPaths = "";
                 personPhoto.PhotoBLOB = new Byte();
                 personPhoto.Person = person;
+                lve.PersonPhotos.Add(personPhoto);
+                person.PersonPhotos.Add(personPhoto);
                 lve.SaveChanges();
             }
 
         }
 
-        public void addPersonDocuments(Person person) {
+        public void addPersonDocuments(Person person)
+        {
 
-            leVillageEntities lve = new leVillageEntities();
+            
+
+            Document document = new Document();
+            document.documentsName = "";
+            document.documentsDetails = "";
+            document.documentsPath = "";
+            document.accessCount = 1;
+            document.dateUploaded = new DateTime();
+            document.uploadedBy = "";
+            document.DocumentType = new DocumentType() { idDocumentType = 1, documentTypeName = "" };
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
             if (people != null)
             {
 
+                document.People.Add(person);   //A suivre
+                lve.Documents.Add(document);
+                person.Documents.Add(document); // a suivre
                 lve.SaveChanges();
             }
 
 
         }
 
+        public void addPersonTithes(Person person)
+        {
 
-        public void addPersonChurchHistory(Person person) {
+            
 
-            leVillageEntities lve = new leVillageEntities();
+            Tithe tithes = new Tithe();
+            tithes.idTithes = 1;
+            tithes.titheDate = new DateTime();
+            tithes.titheAmount = 9.4;
+            tithes.titheComment = "";
+            tithes.idService = 1;
+            tithes.Person = person;
+            lve.Tithes.Add(tithes);
+            lve.SaveChanges();
+
+        }
+
+        public void addPersonNotes(Person person)
+        {
+
+            
+
+            Note notes = new Note();
+
+            notes.idNotes = 1;
+            notes.notesDescription = "";
+            notes.createdDate = new DateTime();
+            notes.modifiedDate = new DateTime();
+            notes.createdBy = "";
+            notes.modifiedBy = "";
+            notes.idNoteType = 1;
+
+
+            var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
+
+            if (people != null)
+            {
+
+                notes.Person = person;
+                lve.Notes.Add(notes);
+                lve.SaveChanges();
+            }
+
+
+        }
+
+        public void addPersonChurchHistory(Person person)
+        {
+
+            
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
@@ -268,33 +386,166 @@ namespace WebApplication1.Models
                 churchHistory.roleInChurch = 1;
                 churchHistory.comments = "";
                 churchHistory.Person = person;
+                lve.ChurchHistories.Add(churchHistory);
                 lve.SaveChanges();
             }
 
         }
 
+        public Person searchPersonByIdentificationNumber(String identificationNumber)
+        {
 
-        public void searchPerson() {
+            
+
+            var people = lve.People.Where(x => x.memberIdentificationNumber == identificationNumber).FirstOrDefault();
+
+            if (people != null)
+            {
 
 
+            }
 
-
+            return people;
         }
 
 
-        public void updatePerson() {
+        public List<Person> searchPersonByName(String name)
+        {
 
+            
+
+            var people = lve.People.Where(x => x.firstName == name || x.lastName == name || x.phone == name || x.memberIdentificationNumber == name).ToList();
+
+            if (people != null)
+            {
+
+
+            }
+
+            return people;
         }
 
-
-        public void removePerson()
+        public void updatePerson(int? id, Person person)
         {
 
 
+            
+
+            var people = lve.People.Where(x => x.idPerson == id).FirstOrDefault();
+
+
+
+            person.firstName = "Paul";
+            person.lastName = "Murphy";
+            person.memberIdentificationNumber = generateMemberIdentificationNumber();
+            person.dateOfBirth = new DateTime();
+            person.sex = "Male";
+            person.email = "pmurphy@merqury.com";
+            person.phone = "+50937416899";
+            person.isConverted = 0;
+            person.dateConversion = new DateTime(); // if the person is not converted, don't put any date
+            person.isBaptized = 0;
+            person.dateBaptism = new DateTime(); //if the person is not baptized, don't put any date
+            person.Profession = new Profession() { professionName = "Financial Engineer", idIndustry = 1 };
+            person.Address = new Address() { street = "streetName", city = "CityName", state = "Departement", postalCode = "HT6120", idCountry = 1 };
+            person.isMember = 0;
+            person.dateMembership = new DateTime(); //if the person is not a member, don't put any date
+            person.EntryPoint = new EntryPoint() { entryPointName = "Service", locationEntryPoint = "La Gonave" };
+            person.dateWedding = new DateTime(); // if the person is not married, don't put any date
+            person.FamilyRole = new FamilyRole() { familyRoleName = "Father", familyRoleCode = "FATHER" };
+            person.Family = new Family() { FamilyName = person.lastName, idAddress = person.Address.idAddress };
+            person.isDeceased = 0; // when entering the person, the person should not be deceased, if deceased give another interface
+            person.Campu = new Campu() { campusName = "", campusStreet = "", campusCity = "", campusPostalCode = "", idCountry = 1 };
+            person.MedicalInfo = new MedicalInfo() { doctorName = "", doctorPhone = "", doctorEmail = "", idbloodType = 1, height = "5.6", allergies = "", pathologies = "", medicines = "", vaccines = "", comments = "" };
+            lve.SaveChanges();
+        }
+
+        public void updatePerson(Person person)
+        {
+
+
+            
+
+            person.firstName = "Paul";
+            person.lastName = "Murphy";
+            person.memberIdentificationNumber = generateMemberIdentificationNumber();
+            person.dateOfBirth = new DateTime();
+            person.sex = "Male";
+            person.email = "pmurphy@merqury.com";
+            person.phone = "+50937416899";
+            person.isConverted = 0;
+            person.dateConversion = new DateTime(); // if the person is not converted, don't put any date
+            person.isBaptized = 0;
+            person.dateBaptism = new DateTime(); //if the person is not baptized, don't put any date
+            person.Profession = new Profession() { professionName = "Financial Engineer", idIndustry = 1 };
+            person.Address = new Address() { street = "streetName", city = "CityName", state = "Departement", postalCode = "HT6120", idCountry = 1 };
+            person.isMember = 0;
+            person.dateMembership = new DateTime(); //if the person is not a member, don't put any date
+            person.EntryPoint = new EntryPoint() { entryPointName = "Service", locationEntryPoint = "La Gonave" };
+            person.dateWedding = new DateTime(); // if the person is not married, don't put any date
+            person.FamilyRole = new FamilyRole() { familyRoleName = "Father", familyRoleCode = "FATHER" };
+            person.Family = new Family() { FamilyName = person.lastName, idAddress = person.Address.idAddress };
+            person.isDeceased = 0; // when entering the person, the person should not be deceased, if deceased give another interface
+            person.Campu = new Campu() { campusName = "", campusStreet = "", campusCity = "", campusPostalCode = "", idCountry = 1 };
+            person.MedicalInfo = new MedicalInfo() { doctorName = "", doctorPhone = "", doctorEmail = "", idbloodType = 1, height = "5.6", allergies = "", pathologies = "", medicines = "", vaccines = "", comments = "" };
+            lve.SaveChanges();
+        }
+
+        public void removePerson(int id)
+        {
+
+            
+
+            var people = lve.People.Where(x => x.idPerson == id).FirstOrDefault();
+
+            var churchHistory = lve.ChurchHistories.Where(x => x.idPerson == id).FirstOrDefault();
+            var notes = lve.Notes.Where(x => x.idPerson == id).FirstOrDefault();
+            var tithes = lve.Tithes.Where(x => x.idPerson == id).FirstOrDefault();
+            var photos = lve.PersonPhotos.Where(x => x.idPerson == id).FirstOrDefault();
+            var maritalStatus = lve.MaritalStatus.Where(x => x.idPerson == id).FirstOrDefault();
+            var studyLevel = lve.StudyLevels.Where(x => x.idPerson == id).FirstOrDefault();
+            var employmentHistory = lve.EmploymentHistories.Where(x => x.idPerson == id).FirstOrDefault();
+            var statusHistory = lve.StatusHistories.Where(x => x.idPerson == id).FirstOrDefault();
+            var documents = lve.Documents.
+
+            var documents = lve.Documents.Join(documentperson, d=>d.)
+                
+                Where(x => x. == id).FirstOrDefault();
+            //var address = lve.Addresses.Where(x => x.idPerson == id).FirstOrDefault();
+            //var address = lve.Families.Where(x => x.idPerson == id).FirstOrDefault();
+
+            people.ChurchHistories.Remove(churchHistory);
+            people.Notes.Remove(notes);
+            people.Tithes.Remove(tithes);
+            people.PersonPhotos.Remove(photos);
+            people.MaritalStatus.Remove(maritalStatus);
+            people.StudyLevels.Remove(studyLevel);
+            people.EmploymentHistories.Remove(employmentHistory);
+            people.StatusHistories.Remove(statusHistory);
+            people.Documents.Remove(documents);
+          //  people.ChurchHistories.Remove(churchHistory);
+
+
+            people.Documents.Remove();
+
         }
 
 
+        public List<Person> getAllPerson()
+        {
+            return lve.People
+            .OrderBy(p=> p.memberIdentificationNumber)
+            .ToList();
 
+        }
+
+        public List<Person> getAllPersonWithData() {
+
+            return lve.People
+            .OrderBy(p => p.memberIdentificationNumber)
+            .ToList();
+
+        }
 
     }
 }
