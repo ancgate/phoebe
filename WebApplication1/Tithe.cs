@@ -20,7 +20,9 @@ namespace WebApplication1
         public string titheComment { get; set; }
         public int idService { get; set; }
         public int idPerson { get; set; }
+        public int tithesCurrency { get; set; }
     
         public virtual Person Person { get; set; }
+        public virtual Currency Currency { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace WebApplication1
         public int idAddress { get; set; }
         public string phone { get; set; }
         public byte[] picture { get; set; }
+        public string familyName { get; set; }
     
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -18,6 +18,7 @@ namespace WebApplication1
         public int idPerson { get; set; }
         public string photoPaths { get; set; }
         public byte[] PhotoBLOB { get; set; }
+        public byte[] photoBLOB { get; set; }
     
         public virtual Person Person { get; set; }
     }

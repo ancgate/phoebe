@@ -63,7 +63,6 @@ namespace WebApplication1.Models
             campus.campusStreet = "";
             campus.campusCity = "";
             campus.campusPostalCode = "";
-            campus.parentCampus = 1;
             campus.idCountry = 1;
             lve.Campus.Add(campus);
             lve.SaveChanges();
@@ -151,11 +150,7 @@ namespace WebApplication1.Models
 
             var document = lve.Documents.Where(x => x.documentsName == "Delmas").FirstOrDefault();
 
-            if (document != null)
-            {
-                count = document.accessCount;
-            }
-
+            count = document.accessCount;
             return count;
 
         }
@@ -270,7 +265,7 @@ namespace WebApplication1.Models
             family.FamilyName = person.lastName;
             family.Address = person.Address;
             family.phone = person.phone;
-            family.picture = new Byte();
+            family.picture = new byte[] { 0x00, 0x00, 0x00, 0x00 };
             lve.Families.Add(family);
             lve.SaveChanges();
 
@@ -287,7 +282,7 @@ namespace WebApplication1.Models
             {
                 PersonPhoto personPhoto = new PersonPhoto();
                 personPhoto.photoPaths = "";
-                personPhoto.PhotoBLOB = new Byte();
+                personPhoto.PhotoBLOB = new byte[] { 0x00, 0x00, 0x00, 0x00 };
                 personPhoto.Person = person;
                 lve.PersonPhotos.Add(personPhoto);
                 person.PersonPhotos.Add(personPhoto);
@@ -309,16 +304,15 @@ namespace WebApplication1.Models
             document.dateUploaded = new DateTime();
             document.uploadedBy = "";
             document.DocumentType = new DocumentType() { idDocumentType = 1, documentTypeName = "" };
+            lve.Documents.Add(document);
+            person.Documents.Add(document);
+            lve.SaveChanges();
 
             var people = lve.People.Where(x => x.memberIdentificationNumber == "Delmas").FirstOrDefault();
 
             if (people != null)
             {
-
-                document.People.Add(person);   //A suivre
-                lve.Documents.Add(document);
-                person.Documents.Add(document); // a suivre
-                lve.SaveChanges();
+                
             }
 
 
@@ -332,9 +326,9 @@ namespace WebApplication1.Models
             Tithe tithes = new Tithe();
             tithes.idTithes = 1;
             tithes.titheDate = new DateTime();
-            tithes.titheAmount = 9.4;
+            tithes.titheAmount = (decimal) 9.4;
             tithes.titheComment = "";
-            tithes.idService = 1;
+            tithes.Currency = new Currency() { idCurrency = 1, currencyName = "", currencyCode = "", currencyImage = new byte[] { 0x00, 0x00, 0x00, 0x00 } };
             tithes.Person = person;
             lve.Tithes.Add(tithes);
             lve.SaveChanges();
@@ -506,11 +500,10 @@ namespace WebApplication1.Models
             var studyLevel = lve.StudyLevels.Where(x => x.idPerson == id).FirstOrDefault();
             var employmentHistory = lve.EmploymentHistories.Where(x => x.idPerson == id).FirstOrDefault();
             var statusHistory = lve.StatusHistories.Where(x => x.idPerson == id).FirstOrDefault();
-            var documents = lve.Documents.
+            var documents = lve.Documents.Where(x => x.idPerson == id).FirstOrDefault();
 
-            var documents = lve.Documents.Join(documentperson, d=>d.)
-                
-                Where(x => x. == id).FirstOrDefault();
+            //test if addresses and family belongs to someoneelse 
+
             //var address = lve.Addresses.Where(x => x.idPerson == id).FirstOrDefault();
             //var address = lve.Families.Where(x => x.idPerson == id).FirstOrDefault();
 
@@ -523,10 +516,8 @@ namespace WebApplication1.Models
             people.EmploymentHistories.Remove(employmentHistory);
             people.StatusHistories.Remove(statusHistory);
             people.Documents.Remove(documents);
-          //  people.ChurchHistories.Remove(churchHistory);
-
-
-            people.Documents.Remove();
+            //  people.Addresses.Remove(churchHistory);
+            //  people.Families.Remove(churchHistory);
 
         }
 

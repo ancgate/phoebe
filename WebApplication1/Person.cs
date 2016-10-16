@@ -26,6 +26,7 @@ namespace WebApplication1
             this.StudyLevels = new HashSet<StudyLevel>();
             this.Tithes = new HashSet<Tithe>();
             this.Documents = new HashSet<Document>();
+            this.Documents1 = new HashSet<Document>();
         }
     
         public int idPerson { get; set; }
@@ -51,6 +52,7 @@ namespace WebApplication1
         public Nullable<short> isDeceased { get; set; }
         public int idCampus { get; set; }
         public Nullable<int> idMedicalInfo { get; set; }
+        public Nullable<System.DateTime> dateEntry { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual Campu Campu { get; set; }
@@ -77,5 +79,7 @@ namespace WebApplication1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Document> Documents { get; set; }
         public virtual FamilyRole FamilyRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Document> Documents1 { get; set; }
     }
 }

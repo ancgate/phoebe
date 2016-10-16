@@ -99,13 +99,6 @@
           <Property Name="dateUploaded" Type="datetime2" Precision="0" />
           <Property Name="uploadedBy" Type="nvarchar" MaxLength="45" />
           <Property Name="idDocumentType" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="DocumentsPerson">
-          <Key>
-            <PropertyRef Name="idDocuments" />
-            <PropertyRef Name="idPerson" />
-          </Key>
-          <Property Name="idDocuments" Type="int" Nullable="false" />
           <Property Name="idPerson" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DocumentsTag">
@@ -128,7 +121,7 @@
             <PropertyRef Name="idEmploymentHistory" />
           </Key>
           <Property Name="idEmploymentHistory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployerName" Type="nvarchar" MaxLength="45" />
+          <Property Name="employerName" Type="nvarchar" MaxLength="45" />
           <Property Name="fromDate" Type="date" />
           <Property Name="toDate" Type="date" />
           <Property Name="position" Type="nvarchar" MaxLength="45" />
@@ -147,7 +140,7 @@
             <PropertyRef Name="idFamilies" />
           </Key>
           <Property Name="idFamilies" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FamilyName" Type="nvarchar" MaxLength="255" />
+          <Property Name="familyName" Type="nvarchar" MaxLength="255" />
           <Property Name="idAddress" Type="int" Nullable="false" />
           <Property Name="phone" Type="nvarchar" MaxLength="45" />
           <Property Name="picture" Type="varbinary(max)" />
@@ -241,6 +234,7 @@
           <Property Name="isDeceased" Type="smallint" />
           <Property Name="idCampus" Type="int" Nullable="false" />
           <Property Name="idMedicalInfo" Type="int" />
+          <Property Name="dateEntry" Type="date" />
         </EntityType>
         <EntityType Name="PersonPhotos">
           <Key>
@@ -249,7 +243,7 @@
           <Property Name="idPersonPhotos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idPerson" Type="int" Nullable="false" />
           <Property Name="photoPaths" Type="nvarchar" MaxLength="255" />
-          <Property Name="PhotoBLOB" Type="varbinary(max)" />
+          <Property Name="photoBLOB" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Profession">
           <Key>
@@ -296,7 +290,7 @@
           <Property Name="titheDate" Type="datetime2" Precision="0" />
           <Property Name="titheAmount" Type="decimal" Precision="9" Scale="2" />
           <Property Name="titheComment" Type="nvarchar" MaxLength="255" />
-          <Property Name="idService" Type="int" Nullable="false" />
+          <Property Name="tithesCurrency" Type="int" Nullable="false" />
           <Property Name="idPerson" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="Address$fk_Address_Country1">
@@ -359,26 +353,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="DocumentsPerson$fk_Documents_has_Person_Documents1">
-          <End Role="Documents" Type="Self.Documents" Multiplicity="1" />
-          <End Role="DocumentsPerson" Type="Self.DocumentsPerson" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Documents">
-              <PropertyRef Name="idDocuments" />
-            </Principal>
-            <Dependent Role="DocumentsPerson">
-              <PropertyRef Name="idDocuments" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="DocumentsPerson$fk_Documents_has_Person_Person1">
+        <Association Name="Documents$fk_Documents_Person1">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
-          <End Role="DocumentsPerson" Type="Self.DocumentsPerson" Multiplicity="*" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Person">
               <PropertyRef Name="idPerson" />
             </Principal>
-            <Dependent Role="DocumentsPerson">
+            <Dependent Role="Documents">
               <PropertyRef Name="idPerson" />
             </Dependent>
           </ReferentialConstraint>
@@ -623,6 +605,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Tithes$fk_Tithes_Currency1">
+          <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+          <End Role="Tithes" Type="Self.Tithes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="idCurrency" />
+            </Principal>
+            <Dependent Role="Tithes">
+              <PropertyRef Name="tithesCurrency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Tithes$fk_Tithes_Person1">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
           <End Role="Tithes" Type="Self.Tithes" Multiplicity="*" />
@@ -644,7 +638,6 @@
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DocumentsPerson" EntityType="Self.DocumentsPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentsTag" EntityType="Self.DocumentsTag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentType" EntityType="Self.DocumentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmploymentHistory" EntityType="Self.EmploymentHistory" Schema="dbo" store:Type="Tables" />
@@ -683,13 +676,9 @@
             <End Role="DocumentType" EntitySet="DocumentType" />
             <End Role="Documents" EntitySet="Documents" />
           </AssociationSet>
-          <AssociationSet Name="DocumentsPerson$fk_Documents_has_Person_Documents1" Association="Self.DocumentsPerson$fk_Documents_has_Person_Documents1">
-            <End Role="Documents" EntitySet="Documents" />
-            <End Role="DocumentsPerson" EntitySet="DocumentsPerson" />
-          </AssociationSet>
-          <AssociationSet Name="DocumentsPerson$fk_Documents_has_Person_Person1" Association="Self.DocumentsPerson$fk_Documents_has_Person_Person1">
+          <AssociationSet Name="Documents$fk_Documents_Person1" Association="Self.Documents$fk_Documents_Person1">
             <End Role="Person" EntitySet="Person" />
-            <End Role="DocumentsPerson" EntitySet="DocumentsPerson" />
+            <End Role="Documents" EntitySet="Documents" />
           </AssociationSet>
           <AssociationSet Name="DocumentsTag$fk_Documents_has_Tag_Documents1" Association="Self.DocumentsTag$fk_Documents_has_Tag_Documents1">
             <End Role="Documents" EntitySet="Documents" />
@@ -770,6 +759,10 @@
           <AssociationSet Name="StudyLevel$fk_StudyLevel_StudyLevelType1" Association="Self.StudyLevel$fk_StudyLevel_StudyLevelType1">
             <End Role="StudyLevelType" EntitySet="StudyLevelType" />
             <End Role="StudyLevel" EntitySet="StudyLevel" />
+          </AssociationSet>
+          <AssociationSet Name="Tithes$fk_Tithes_Currency1" Association="Self.Tithes$fk_Tithes_Currency1">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="Tithes" EntitySet="Tithes" />
           </AssociationSet>
           <AssociationSet Name="Tithes$fk_Tithes_Person1" Association="Self.Tithes$fk_Tithes_Person1">
             <End Role="Person" EntitySet="Person" />
@@ -853,6 +846,8 @@
           <NavigationProperty Name="DocumentType" Relationship="Self.Documents_fk_Documents_DocumentType1" FromRole="Documents" ToRole="DocumentType" />
           <NavigationProperty Name="DocumentsTags" Relationship="Self.DocumentsTag_fk_Documents_has_Tag_Documents1" FromRole="Documents" ToRole="DocumentsTag" />
           <NavigationProperty Name="People" Relationship="Self.DocumentsPerson" FromRole="Documents" ToRole="Person" />
+          <Property Name="idPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="leVillageModel.Documents_fk_Documents_Person1" FromRole="Document" ToRole="Person" />
         </EntityType>
         <EntityType Name="DocumentsTag">
           <Key>
@@ -882,6 +877,7 @@
           <Property Name="position" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="idPerson" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="Self.EmploymentHistory_fk_EmploymentHistory_Person1" FromRole="EmploymentHistory" ToRole="Person" />
+          <Property Name="employerName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EntryPoint">
           <Key>
@@ -903,6 +899,7 @@
           <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Address" Relationship="Self.Families_fk_Families_Address1" FromRole="Families" ToRole="Address" />
           <NavigationProperty Name="People" Relationship="Self.Person_fk_Person_Families1" FromRole="Families" ToRole="Person" />
+          <Property Name="familyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MaritalStatu">
           <Key>
@@ -1000,6 +997,8 @@
           <NavigationProperty Name="Tithes" Relationship="Self.Tithes_fk_Tithes_Person1" FromRole="Person" ToRole="Tithes" />
           <NavigationProperty Name="Documents" Relationship="Self.DocumentsPerson" FromRole="Person" ToRole="Documents" />
           <NavigationProperty Name="FamilyRole" Relationship="leVillageModel.Person_fk_Person_FamilyRole1" FromRole="Person" ToRole="FamilyRole" />
+          <Property Name="dateEntry" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Documents1" Relationship="leVillageModel.Documents_fk_Documents_Person1" FromRole="Person" ToRole="Document" />
         </EntityType>
         <EntityType Name="PersonPhoto">
           <Key>
@@ -1010,6 +1009,7 @@
           <Property Name="photoPaths" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PhotoBLOB" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Person" Relationship="Self.PersonPhotos_fk_PersonPhotos_Person1" FromRole="PersonPhotos" ToRole="Person" />
+          <Property Name="photoBLOB" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Profession">
           <Key>
@@ -1066,6 +1066,8 @@
           <Property Name="idService" Type="Int32" Nullable="false" />
           <Property Name="idPerson" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Person" Relationship="Self.Tithes_fk_Tithes_Person1" FromRole="Tithes" ToRole="Person" />
+          <Property Name="tithesCurrency" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Currency" Relationship="leVillageModel.Tithes_fk_Tithes_Currency1" FromRole="Tithe" ToRole="Currency" />
         </EntityType>
         <Association Name="Families_fk_Families_Address1">
           <End Role="Address" Type="Self.Address" Multiplicity="1" />
@@ -1470,6 +1472,14 @@
             <End Role="FamilyRole" EntitySet="FamilyRoles" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
+          <AssociationSet Name="Tithes_fk_Tithes_Currency1" Association="leVillageModel.Tithes_fk_Tithes_Currency1">
+            <End Role="Currency" EntitySet="Currencies" />
+            <End Role="Tithe" EntitySet="Tithes" />
+          </AssociationSet>
+          <AssociationSet Name="Documents_fk_Documents_Person1" Association="leVillageModel.Documents_fk_Documents_Person1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Document" EntitySet="Documents" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Country">
           <Key>
@@ -1506,6 +1516,7 @@
           <Property Name="currencyCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="currencyName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="currencyImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Tithes" Relationship="leVillageModel.Tithes_fk_Tithes_Currency1" FromRole="Currency" ToRole="Tithe" />
         </EntityType>
         <EntityType Name="Industry">
           <Key>
@@ -1572,6 +1583,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Tithes_fk_Tithes_Currency1">
+          <End Type="leVillageModel.Currency" Role="Currency" Multiplicity="1" />
+          <End Type="leVillageModel.Tithe" Role="Tithe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="idCurrency" />
+            </Principal>
+            <Dependent Role="Tithe">
+              <PropertyRef Name="tithesCurrency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Documents_fk_Documents_Person1">
+          <End Type="leVillageModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="leVillageModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="idPerson" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="idPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1634,6 +1669,7 @@
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="leVillageModel.Document">
               <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="idPerson" ColumnName="idPerson" />
                 <ScalarProperty Name="idDocuments" ColumnName="idDocuments" />
                 <ScalarProperty Name="documentsName" ColumnName="documentsName" />
                 <ScalarProperty Name="documentsPath" ColumnName="documentsPath" />
@@ -1664,8 +1700,8 @@
           <EntitySetMapping Name="EmploymentHistories">
             <EntityTypeMapping TypeName="leVillageModel.EmploymentHistory">
               <MappingFragment StoreEntitySet="EmploymentHistory">
+                <ScalarProperty Name="employerName" ColumnName="employerName" />
                 <ScalarProperty Name="idEmploymentHistory" ColumnName="idEmploymentHistory" />
-                <ScalarProperty Name="EmployerName" ColumnName="EmployerName" />
                 <ScalarProperty Name="fromDate" ColumnName="fromDate" />
                 <ScalarProperty Name="toDate" ColumnName="toDate" />
                 <ScalarProperty Name="position" ColumnName="position" />
@@ -1685,8 +1721,8 @@
           <EntitySetMapping Name="Families">
             <EntityTypeMapping TypeName="leVillageModel.Family">
               <MappingFragment StoreEntitySet="Families">
+                <ScalarProperty Name="familyName" ColumnName="familyName" />
                 <ScalarProperty Name="idFamilies" ColumnName="idFamilies" />
-                <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
                 <ScalarProperty Name="idAddress" ColumnName="idAddress" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
@@ -1746,6 +1782,7 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="leVillageModel.Person">
               <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="dateEntry" ColumnName="dateEntry" />
                 <ScalarProperty Name="idPerson" ColumnName="idPerson" />
                 <ScalarProperty Name="memberIdentificationNumber" ColumnName="memberIdentificationNumber" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
@@ -1775,10 +1812,10 @@
           <EntitySetMapping Name="PersonPhotos">
             <EntityTypeMapping TypeName="leVillageModel.PersonPhoto">
               <MappingFragment StoreEntitySet="PersonPhotos">
+                <ScalarProperty Name="photoBLOB" ColumnName="photoBLOB" />
                 <ScalarProperty Name="idPersonPhotos" ColumnName="idPersonPhotos" />
                 <ScalarProperty Name="idPerson" ColumnName="idPerson" />
                 <ScalarProperty Name="photoPaths" ColumnName="photoPaths" />
-                <ScalarProperty Name="PhotoBLOB" ColumnName="PhotoBLOB" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1826,23 +1863,15 @@
           <EntitySetMapping Name="Tithes">
             <EntityTypeMapping TypeName="leVillageModel.Tithe">
               <MappingFragment StoreEntitySet="Tithes">
+                <ScalarProperty Name="tithesCurrency" ColumnName="tithesCurrency" />
                 <ScalarProperty Name="idTithes" ColumnName="idTithes" />
                 <ScalarProperty Name="titheDate" ColumnName="titheDate" />
                 <ScalarProperty Name="titheAmount" ColumnName="titheAmount" />
                 <ScalarProperty Name="titheComment" ColumnName="titheComment" />
-                <ScalarProperty Name="idService" ColumnName="idService" />
                 <ScalarProperty Name="idPerson" ColumnName="idPerson" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="DocumentsPerson" TypeName="leVillageModel.DocumentsPerson" StoreEntitySet="DocumentsPerson">
-            <EndProperty Name="Documents">
-              <ScalarProperty Name="idDocuments" ColumnName="idDocuments" />
-            </EndProperty>
-            <EndProperty Name="Person">
-              <ScalarProperty Name="idPerson" ColumnName="idPerson" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="leVillageModel.Country">
               <MappingFragment StoreEntitySet="Country">

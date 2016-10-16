@@ -20,6 +20,7 @@ namespace WebApplication1
         public Nullable<System.DateTime> toDate { get; set; }
         public string position { get; set; }
         public int idPerson { get; set; }
+        public string employerName { get; set; }
     
         public virtual Person Person { get; set; }
     }

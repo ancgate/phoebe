@@ -14,9 +14,18 @@ namespace WebApplication1
     
     public partial class Currency
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Currency()
+        {
+            this.Tithes = new HashSet<Tithe>();
+        }
+    
         public int idCurrency { get; set; }
         public string currencyCode { get; set; }
         public string currencyName { get; set; }
         public byte[] currencyImage { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tithe> Tithes { get; set; }
     }
 }

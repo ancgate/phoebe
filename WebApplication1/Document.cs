@@ -29,11 +29,13 @@ namespace WebApplication1
         public Nullable<System.DateTime> dateUploaded { get; set; }
         public string uploadedBy { get; set; }
         public int idDocumentType { get; set; }
+        public int idPerson { get; set; }
     
         public virtual DocumentType DocumentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocumentsTag> DocumentsTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Person> People { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

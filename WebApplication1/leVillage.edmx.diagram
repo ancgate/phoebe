@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="leVillageModel.Campu" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="leVillageModel.CheckListCategory" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="leVillageModel.ChurchHistory" Width="1.5" PointX="10.5" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="leVillageModel.Document" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="leVillageModel.Document" Width="1.5" PointX="2.375" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="leVillageModel.DocumentsTag" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="leVillageModel.DocumentType" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="leVillageModel.EmploymentHistory" Width="1.5" PointX="7.5" PointY="11.875" IsExpanded="true" />
@@ -58,6 +58,8 @@
         <AssociationConnector Association="leVillageModel.Profession_fk_profession_Industry1" />
         <EntityTypeShape EntityType="leVillageModel.FamilyRole" Width="1.5" PointX="10.375" PointY="0.875" />
         <AssociationConnector Association="leVillageModel.Person_fk_Person_FamilyRole1" />
+        <AssociationConnector Association="leVillageModel.Tithes_fk_Tithes_Currency1" />
+        <AssociationConnector Association="leVillageModel.Documents_fk_Documents_Person1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
